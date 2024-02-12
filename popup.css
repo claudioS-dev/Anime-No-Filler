@@ -1,0 +1,50 @@
+*{
+  background-color: #000;
+  color: #f47521;
+}
+body {
+    width: 200px;
+    height: 300px;
+    padding: 10px;
+    scrollbar-color: #f47521 #59595B;
+    scrollbar-width: auto;
+    margin-bottom: 10rem;
+  }
+  
+  button {
+    margin-bottom: 10px;
+    padding: 0.5rem 5rem;
+    color: white;
+    background-color: #59595B;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;    
+    margin: 5px;
+  }
+  button:hover {
+    background-color: #f47521;
+  }
+
+#donacion {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.ajustes {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.animesParaVer {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: 0.5rem;
+}
