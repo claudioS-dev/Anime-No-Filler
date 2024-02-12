@@ -1,4 +1,4 @@
-//test
+//final test
 class Anime {
     constructor(name, canonEpisodes, fillerEpisodes, mixedEpisodes, canonAnimeEpisodes) {
         this.name = name;
