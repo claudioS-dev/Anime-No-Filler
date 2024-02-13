@@ -1,3 +1,4 @@
+//hola ramiro
 class Anime {
     constructor(name, canonEpisodes, fillerEpisodes, mixedEpisodes, canonAnimeEpisodes) {
         this.name = name;
@@ -101,23 +102,17 @@ const narutoShippuden = new Anime("Naruto Shippuden", narutoShippudenCanonEpisod
 
 const listAnimes = [onePiece, narutoShippuden];
 
-function animeInList(animeName) {
+function getAnimeByName(animeName) {
     return listAnimes.find(anime => anime.name === animeName);
-}
-
-function getAnime(animeName) {
-    for(anime of listAnimes) {
-        if(anime.name === animeName) { return anime; }
-    }
 }
 
 function checkNameAnime() {
     return new Promise(function(resolve) {
-        var interval = setInterval(function () {
-            var animeName = document.querySelector('h4.text--gq6o-');
-            if (animeName && animeInList(animeName.textContent)) {
+        const interval = setInterval(function () {
+            const animeName = document.querySelector('h4.text--gq6o-');
+            if (animeName && getAnimeByName(animeName.textContent)) {
                 clearInterval(interval);
-                resolve(getAnime(animeName.textContent));
+                resolve(getAnimeByName(animeName.textContent));
             }
         }, 1000);
     });
