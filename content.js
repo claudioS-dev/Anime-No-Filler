@@ -133,9 +133,8 @@ function getH1Title() {
 }
 
 
-// Lógica de la función getH1Text
+// Determina el tag y el color del tag EJ: {CANON, GREEN}
 function episodeInfo(anime, episode) {
-
     let tag = "";
     let color = "";
 
@@ -171,7 +170,7 @@ function episodeInfo(anime, episode) {
 
 }
 
-// Función para cambiar el color h1 y decir si es relleno o no
+
 function setTitle(h1Element, tag, color) {
 
     const animeName = document.querySelector('h4.text--gq6o-').textContent
@@ -190,7 +189,7 @@ function getEpisodeNumber(title) {
     return match ? parseInt(match[0]) : null;
 }
 
-// Función para comprobar y activar
+
 
 function titleIncludeInformation(titleText) {
     return titleText.includes("CANON") 
@@ -202,8 +201,8 @@ function titleIncludeInformation(titleText) {
 async function setInformation() {
     const anime = await getAnimeObjectInArray();
     const h1 = await getH1Title();
-    titleText = h1.innerText;
-    episode = getEpisodeNumber(titleText);
+    const titleText = h1.innerText;
+    const episode = getEpisodeNumber(titleText);
 
     if (anime.name && !titleIncludeInformation(titleText)) {
         let info = episodeInfo(anime, episode);
@@ -212,8 +211,6 @@ async function setInformation() {
 }
 
 // Ejecuta la función inicialmente.
-
 setInformation();
-
 
 intervalId = setInterval(setInformation, 1000);
