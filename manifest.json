@@ -17,5 +17,11 @@
             "js": ["content.js"],
             "matches": ["https://www.crunchyroll.com/es/watch/*"]
         }
-    ]
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["infoAnimes.json"],
+            "matches": ["<all_urls>"]
+        }
+    ]  
 }
