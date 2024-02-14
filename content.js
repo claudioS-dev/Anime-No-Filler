@@ -175,7 +175,7 @@ function episodeInfo(anime, episode) {
 function setTitle(h1Element, tag, color) {
 
     const animeName = document.querySelector('h4.text--gq6o-').textContent
-    if (!getAnimeObjectByName(animeName)) return;
+    if (!getAnimeObjectByName(animeName)) return; // se asegura que el anime este en la lista de animes antes de cambiar el titulo
 
     let spanElement = document.createElement("span");
 
