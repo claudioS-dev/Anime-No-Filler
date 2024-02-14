@@ -1,26 +1,27 @@
-class Anime {
-    constructor(name, canonEpisodes, fillerEpisodes, mixedEpisodes, canonAnimeEpisodes) {
-        this.name = name;
-        this.canonEpisodes = canonEpisodes;
-        this.fillerEpisodes = fillerEpisodes;
-        this.mixedEpisodes = mixedEpisodes;
-        this.canonAnimeEpisodes = canonAnimeEpisodes;
-}
-}
+let animeObjectsArray;
+function fetchData() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(['cachedAnimeData'], function(result) {
+        const animeData = result.cachedAnimeData;
+  
+        if (animeData){
+            animeObjectsArray = animeData.animes;
+            resolve();
+        }
+        fetch(chrome.runtime.getURL('infoAnimes.json'))
+            .then(response => response.json())
+            .then((json) => {
+              chrome.storage.local.set({cachedAnimeData: json});
+              animeObjectsArray = json.animes;
+              resolve();
+            })
+            .catch(error => reject(error));
 
-const animeObjectsArray = [];
-fetch(chrome.runtime.getURL('infoAnimes.json'))
-.then(response => response.json())
-.then((json) => {
-    json.animes.forEach(anime => {
-        const newAnime = new Anime(anime.name, 
-            anime.canonEpisodes, 
-            anime.fillerEpisodes, 
-            anime.mixedEpisodes, 
-            anime.canonAnimeEpisodes);
-        animeObjectsArray.push(newAnime);
-    })
-})
+      });
+    });
+  }
+
+
 
 
 function getAnimeObjectByName(animeName) {
@@ -133,6 +134,29 @@ async function setInformation() {
 }
 
 // Ejecuta la función inicialmente.
-setInformation();
+async function main() {
+    try {
+        await fetchData();
+        await setInformation();
+    } catch (error) {
+        console.error("Error en la ejecución de main:", error);
+    }
+}
 
-intervalId = setInterval(setInformation, 1000);
+async function waitForPageLoad() {
+    while (!document.querySelector('h1')) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+}
+
+async function runMainLoop() {
+    await waitForPageLoad();
+    await main();
+    intervalId = setInterval(setInformation, 1000);
+}
+
+runMainLoop();
+
+
+
+  
