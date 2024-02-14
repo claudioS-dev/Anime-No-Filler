@@ -1,4 +1,3 @@
-//cambio del main
 class Anime {
     constructor(name, canonEpisodes, fillerEpisodes, mixedEpisodes, canonAnimeEpisodes) {
         this.name = name;
@@ -91,92 +90,75 @@ const oneCanonAnimeEpisodes = [
     1084
 ];
 
-const narutoShippudenCanonEpisodes = [20, 21, 22, 23, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 51, 52, 53, 55, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 113, 114, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 172, 173, 174, 175, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 214, 215, 216, 217, 218, 219, 220, 221, 222, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 255, 256, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 272, 273, 274, 275, 276, 277, 278, 282, 283, 297, 298, 299, 300, 301, 302, 321, 322, 323, 325, 326, 329, 332, 333, 334, 335, 336, 337, 339, 340, 341, 342, 343, 344, 345, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 378, 379, 380, 381, 382, 383, 384, 387, 391, 392, 393, 414, 418, 420, 421, 424, 425, 459, 463, 470, 473, 474, 475, 476, 477, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500];
+const narutoSCanonEpisodes = [20, 21, 22, 23, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 51, 52, 53, 55, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 113, 114, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 172, 173, 174, 175, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 214, 215, 216, 217, 218, 219, 220, 221, 222, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 255, 256, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 272, 273, 274, 275, 276, 277, 278, 282, 283, 297, 298, 299, 300, 301, 302, 321, 322, 323, 325, 326, 329, 332, 333, 334, 335, 336, 337, 339, 340, 341, 342, 343, 344, 345, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 378, 379, 380, 381, 382, 383, 384, 387, 391, 392, 393, 414, 418, 420, 421, 424, 425, 459, 463, 470, 473, 474, 475, 476, 477, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500];
 const narutoSMixedEpisodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 24, 25, 45, 49, 50, 54, 56, 89, 90, 115, 127, 128, 213, 254, 296, 324, 327, 328, 330, 331, 338, 346, 362, 385, 386, 415, 419, 426, 451, 452, 453, 454, 455, 456, 457, 458, 460, 461, 462, 469, 471, 472, 478, 479];
 const narutoSFillerEpisodes = [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 144, 145, 146, 147, 148, 149, 150, 151, 170, 171, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 257, 258, 259, 260, 271, 279, 280, 281, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 376, 377, 388, 389, 390, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 416, 417, 422, 423, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 464, 465, 466, 467, 468, 480, 481, 482, 483];
 const narutoSAnimeEpisodes = [28]
 
 const onePiece = new Anime("One Piece", oneCanonEpisodes, oneFillerEpisodes, oneMixedEpisodes, oneCanonAnimeEpisodes);
-const narutoShippuden = new Anime("Naruto Shippuden", narutoShippudenCanonEpisodes, narutoSFillerEpisodes, narutoSMixedEpisodes, narutoSAnimeEpisodes);
+const narutoShippuden = new Anime("Naruto Shippuden", narutoSCanonEpisodes, narutoSFillerEpisodes, narutoSMixedEpisodes, narutoSAnimeEpisodes);
 
 
-const listAnimes = [onePiece, narutoShippuden];
+const animeObjectsArray = [onePiece, narutoShippuden];
 
-function getAnimeByName(animeName) {
-    return listAnimes.find(anime => anime.name === animeName);
+function getAnimeObjectByName(animeName) {
+    return animeObjectsArray.find(anime => anime.name === animeName);
 }
 
-function checkNameAnime() {
+function getAnimeObjectInArray() {
     return new Promise(function(resolve) {
         const interval = setInterval(function () {
-            const animeName = document.querySelector('h4.text--gq6o-');
-            if (animeName && getAnimeByName(animeName.textContent)) {
+            const animeName = document.querySelector('h4.text--gq6o-').textContent;
+            const anime = getAnimeObjectByName(animeName);
+            if (anime) {
                 clearInterval(interval);
-                resolve(getAnimeByName(animeName.textContent));
+                resolve(anime);
             }
         }, 1000);
     });
 }
 
 
-// pendiente de corregir
-function waitForH1InDOM(anime) {
-    return new Promise(resolve => {
-        // Función recursiva para verificar la presencia del elemento h1
-        function checkH1() {
-            var h1Element = document.querySelector("h1");
+function getH1Title() {
+    return new Promise(async (resolve) => {
+        let h1Element = document.querySelector("h1");
 
-            if (h1Element) {
-                // Si se encuentra el elemento h1, resuelve la promesa
-                getH1Text(anime);
-                resolve();
-            } else {
-                // Si no se encuentra el elemento h1, sigue verificando después de 1 segundo
-                setTimeout(checkH1, 1000);
-            }
+        while (!(h1Element)) {
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // pausa la ejecución por 1seg
+            h1Element = document.querySelector("h1");
         }
 
-        // Inicia la verificación
-        checkH1();
+        resolve(h1Element);
     });
 }
 
 
 // Lógica de la función getH1Text
-function getH1Text(anime) {
-    var h1Element = document.querySelector("h1");    
+function episodeInfo(anime, episode) {
 
-    if (!h1Element) {
-        console.log("Elemento <h1> no encontrado.");
-        return;
-    }
-
-    var title = h1Element.textContent || h1Element.innerText;
-    var episodeNumber = getEpisodeNumber(title);
-
-    var tag = "";
-    var color = "";
+    let tag = "";
+    let color = "";
 
     switch (true) {
-        case anime.canonAnimeEpisodes.includes(episodeNumber):
+        case anime.canonAnimeEpisodes.includes(episode):
             tag = " ANIME CANON";
             color = "green";
-            console.log(`Episodio Anime Canon: ${episodeNumber}`);
+            console.log(`Episodio Anime Canon: ${episode}`);
             break;
 
-        case anime.canonEpisodes.includes(episodeNumber):
+        case anime.canonEpisodes.includes(episode):
             tag = " CANON";
             color = "green";
-            console.log(`Episodio no relleno: ${episodeNumber}`);
+            console.log(`Episodio no relleno: ${episode}`);
             break;
 
-        case anime.fillerEpisodes.includes(episodeNumber):
+        case anime.fillerEpisodes.includes(episode):
             tag = " RELLENO";
             color = "red";
-            console.log(`Episodio de relleno: ${episodeNumber}`);
+            console.log(`Episodio de relleno: ${episode}`);
             break;
 
-        case anime.mixedEpisodes.includes(episodeNumber):
+        case anime.mixedEpisodes.includes(episode):
             tag = " MIXTO";
             color = "orange";
             break;
@@ -185,16 +167,17 @@ function getH1Text(anime) {
             console.log("Número de episodio no encontrado en ninguna categoría.");
     }
 
-    if (tag !== "") {
-        setTitle(tag, color);
-    }
+    return {tag:tag, color:color}
 
 }
 
 // Función para cambiar el color h1 y decir si es relleno o no
-function setTitle(tag, color) {
-    var h1Element = document.getElementsByTagName("h1")[0];
-    var spanElement = document.createElement("span");
+function setTitle(h1Element, tag, color) {
+
+    const animeName = document.querySelector('h4.text--gq6o-').textContent
+    if (!getAnimeObjectByName(animeName)) return;
+
+    let spanElement = document.createElement("span");
 
     spanElement.innerText = tag;
     h1Element.appendChild(spanElement);
@@ -203,29 +186,34 @@ function setTitle(tag, color) {
 }
 
 function getEpisodeNumber(title) {
-    var match = title.match(/\d+/);
+    let match = title.match(/\d+/);
     return match ? parseInt(match[0]) : null;
 }
 
 // Función para comprobar y activar
-function checkTitle() {
-    checkNameAnime()
-    .then(function(anime) {
-        titleText = document.getElementsByTagName("h1")[0].innerText;
-        includeInformation = titleText.includes("CANON") 
-        || titleText.includes("RELLENO") 
-        || titleText.includes("MIXTO") 
-        || titleText.includes("ANIME CANON");
-        if (anime.name && !includeInformation) {
-            waitForH1InDOM(anime);
-        }
-    })
-    .catch(function(error) {
-        console.error("Error:", error);
-    });
+
+function titleIncludeInformation(titleText) {
+    return titleText.includes("CANON") 
+    || titleText.includes("RELLENO") 
+    || titleText.includes("MIXTO") 
+    || titleText.includes("ANIME CANON");
+}
+
+async function setInformation() {
+    const anime = await getAnimeObjectInArray();
+    const h1 = await getH1Title();
+    titleText = h1.innerText;
+    episode = getEpisodeNumber(titleText);
+
+    if (anime.name && !titleIncludeInformation(titleText)) {
+        let info = episodeInfo(anime, episode);
+        setTitle(h1, info.tag, info.color);
+    }
 }
 
 // Ejecuta la función inicialmente.
-checkTitle();
 
-setInterval(checkTitle, 1000);
+setInformation();
+
+
+intervalId = setInterval(setInformation, 1000);
