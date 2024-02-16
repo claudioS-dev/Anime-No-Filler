@@ -133,30 +133,11 @@ async function setInformation() {
     }
 }
 
-// Ejecuta la función inicialmente.
+
 async function main() {
-    try {
-        await fetchData();
-        await setInformation();
-    } catch (error) {
-        console.error("Error en la ejecución de main:", error);
-    }
-}
-
-async function waitForPageLoad() {
-    while (!document.querySelector('h1')) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-}
-
-async function runMainLoop() {
-    await waitForPageLoad();
-    await main();
+    await fetchData();
+    await setInformation();
     intervalId = setInterval(setInformation, 1000);
-}
-
-runMainLoop();
-
-
-
+}  
+main();
   

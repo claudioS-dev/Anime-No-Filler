@@ -17,7 +17,7 @@
     "content_scripts": [
         {
             "js": ["content.js"],
-            "matches": ["https://www.crunchyroll.com/es/watch/*"]
+            "matches": ["*://*.crunchyroll.com/*"]
         }
     ],
     "web_accessible_resources": [
