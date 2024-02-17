@@ -1,9 +1,23 @@
-console.log("TEST")
+import {
+    fetchData,
+    getAnimeObjectByName,
+    getEpisodeInfo,
+    getEpisodeNumber,
+  } from "./animeDataFunctions.js"
+
+async function loadData(){
+    return await fetchData();
+}
+let animeObjectsArray = loadData();
+
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {
         case 'processInfo':
-            let info = handleProcessInfo(message, sendResponse);
-            sendResponse(info);
+            const animeObject = getAnimeObjectByName(message.animeName, animeObjectsArray);
+            const episode = getEpisodeNumber(message.animeTitle)
+            const episodeInfo = getEpisodeInfo(animeObject, episode);
+            sendResponse(episodeInfo);
             break;
 
         // Agrega más casos según sea necesario
@@ -12,12 +26,3 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.warn('Mensaje no reconocido:', message);
     }
 });
-
-function handleProcessInfo(message, sendResponse) {
-    // Aquí puedes ejecutar las funciones que necesitan la información de h1 y h4
-    const h1Text = message.h1Text;
-    const h4Text = message.h4Text;
-
-    return "RESPUESTA: ";
-
-}
