@@ -8,6 +8,7 @@ function fetchData() {
             animeObjectsArray = animeData.animes;
             resolve();
         }
+        
         fetch(chrome.runtime.getURL('infoAnimes.json'))
             .then(response => response.json())
             .then((json) => {
@@ -16,13 +17,9 @@ function fetchData() {
               resolve();
             })
             .catch(error => reject(error));
-
       });
     });
-  }
-
-
-
+}
 
 function getAnimeObjectByName(animeName) {
     return animeObjectsArray.find(anime => anime.name === animeName);
@@ -54,7 +51,6 @@ function getH1Title() {
         resolve(h1Element);
     });
 }
-
 
 // Determina el tag y el color del tag EJ: {CANON, GREEN}
 function episodeInfo(anime, episode) {
@@ -88,11 +84,8 @@ function episodeInfo(anime, episode) {
         default:
             console.log("Número de episodio no encontrado en ninguna categoría.");
     }
-
     return {tag:tag, color:color}
-
 }
-
 
 function setTitle(h1Element, tag, color) {
 
@@ -111,8 +104,6 @@ function getEpisodeNumber(title) {
     let match = title.match(/\d+/);
     return match ? parseInt(match[0]) : null;
 }
-
-
 
 function titleIncludeInformation(titleText) {
     return titleText.includes("CANON") 
@@ -133,11 +124,11 @@ async function setInformation() {
     }
 }
 
-
 async function main() {
     await fetchData();
     await setInformation();
     intervalId = setInterval(setInformation, 1000);
 }  
+
 main();
   
