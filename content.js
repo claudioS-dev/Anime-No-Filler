@@ -1,11 +1,12 @@
-async function getAnimeInfo(animeTitle, animeName) {
-    chrome.runtime.sendMessage({ action: 'processInfo', animeTitle: animeTitle, animeName: animeName }, 
-    (response) => {
-        console.log('Respuesta desde background.js:',  response);
-        return response;
-        
+function getAnimeInfo(animeTitle, animeName) {
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ action: 'processInfo', animeTitle, animeName }, (response) => {
+            console.log('Respuesta desde background.js:', response);
+            resolve(response);
+        });
     });
 }
+
 
 function getElementInDOM(nameElement) {
     return new Promise(async (resolve) => {
@@ -23,7 +24,7 @@ function getElementInDOM(nameElement) {
 function setTitle(h1Element, tag, color) {
 
     const animeName = document.querySelector('h4.text--gq6o-').textContent
-    if (!getAnimeObjectByName(animeName)) return; // se asegura que el anime este en la lista de animes antes de cambiar el titulo
+    //if (!getAnimeObjectByName(animeName)) return; // se asegura que el anime este en la lista de animes antes de cambiar el titulo
 
     let spanElement = document.createElement("span");
 
@@ -51,10 +52,15 @@ async function setInformation() {
 
     let episodeInfo;
     
-    if (animeName && !titleIncludeInformation(animeTitle)) {
-        episodeInfo = await getAnimeInfo(animeTitle, animeName);
+    if (titleIncludeInformation(animeTitle)) {
+        return;
+    }
+
+    episodeInfo = await getAnimeInfo(animeTitle, animeName);
+    if (episodeInfo){
         setTitle(h1Element, episodeInfo.tag, episodeInfo.color);
     }
+    
 }
 
 async function main() {

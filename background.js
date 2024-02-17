@@ -5,20 +5,11 @@ import {
     getEpisodeNumber,
   } from "./animeDataFunctions.js"
 
-async function loadData(){
-    return await fetchData();
-}
-let animeObjectsArray = loadData();
-
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {
         case 'processInfo':
-            const animeObject = getAnimeObjectByName(message.animeName, animeObjectsArray);
-            const episode = getEpisodeNumber(message.animeTitle)
-            const episodeInfo = getEpisodeInfo(animeObject, episode);
-            sendResponse(episodeInfo);
-            break;
+            processInfo(message, sendResponse);
+            return true;
 
         // Agrega más casos según sea necesario
 
@@ -26,3 +17,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.warn('Mensaje no reconocido:', message);
     }
 });
+
+async function processInfo(message, sendResponse)  {
+    const animeObjectsArray = await fetchData();
+    const animeObject = getAnimeObjectByName(message.animeName, animeObjectsArray);
+    const episode = getEpisodeNumber(message.animeTitle)
+    const episodeInfo = getEpisodeInfo(animeObject, episode);
+    console.log("LOG:", episodeInfo) 
+    sendResponse(episodeInfo);
+}
