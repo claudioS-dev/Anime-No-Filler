@@ -14,6 +14,10 @@
         "scripting", 
         "storage"
     ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+      },
     "content_scripts": [
         {
             "js": ["content.js"],
@@ -25,5 +29,5 @@
             "resources": ["infoAnimes.json"],
             "matches": ["<all_urls>"]
         }
-    ]  
+    ]
 }

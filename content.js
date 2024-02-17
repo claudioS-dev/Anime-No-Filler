@@ -1,3 +1,22 @@
+
+
+async function getH1AndH4Info() {
+    const h1Element = await getElement("h1");
+    const h4Element = await getElement("h4.text--gq6o-");
+
+    if (h1Element && h4Element) {
+        const h1Text = h1Element.innerText;
+        const h4Text = h4Element.innerText;
+
+        chrome.runtime.sendMessage({ action: 'processInfo', h1Text, h4Text }, (response) => {
+            console.log('Respuesta desde background.js:',  response);
+
+            // Ejecuta la función para establecer el título con la respuesta del background.js
+            //setTitle(h1Element, response.tag, response.color);
+        });
+    }
+}
+
 let animeObjectsArray;
 function fetchData() {
     return new Promise((resolve, reject) => {
@@ -39,16 +58,16 @@ function getAnimeObjectInArray() {
 }
 
 
-function getH1Title() {
+function getElement(nameElement) {
     return new Promise(async (resolve) => {
-        let h1Element = document.querySelector("h1");
+        let element = document.querySelector(nameElement);
 
-        while (!(h1Element)) {
+        while (!(element)) {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // pausa la ejecución por 1seg
-            h1Element = document.querySelector("h1");
+            element = document.querySelector(nameElement);
         }
 
-        resolve(h1Element);
+        resolve(element);
     });
 }
 
@@ -114,7 +133,7 @@ function titleIncludeInformation(titleText) {
 
 async function setInformation() {
     const anime = await getAnimeObjectInArray();
-    const h1 = await getH1Title();
+    const h1 = await getElement("h1");
     const titleText = h1.innerText;
     const episode = getEpisodeNumber(titleText);
     
@@ -125,10 +144,13 @@ async function setInformation() {
 }
 
 async function main() {
+    await getH1AndH4Info();
+    
     await fetchData();
     await setInformation();
     intervalId = setInterval(setInformation, 1000);
 }  
+
 
 main();
   
