@@ -1,27 +1,25 @@
-class Anime {
-    constructor(name, canonEpisodes, fillerEpisodes, mixedEpisodes, canonAnimeEpisodes) {
-        this.name = name;
-        this.canonEpisodes = canonEpisodes;
-        this.fillerEpisodes = fillerEpisodes;
-        this.mixedEpisodes = mixedEpisodes;
-        this.canonAnimeEpisodes = canonAnimeEpisodes;
+let animeObjectsArray;
+function fetchData() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(['cachedAnimeData'], function(result) {
+        const animeData = result.cachedAnimeData;
+  
+        if (animeData){
+            animeObjectsArray = animeData.animes;
+            resolve();
+        }
+        
+        fetch(chrome.runtime.getURL('infoAnimes.json'))
+            .then(response => response.json())
+            .then((json) => {
+              chrome.storage.local.set({cachedAnimeData: json});
+              animeObjectsArray = json.animes;
+              resolve();
+            })
+            .catch(error => reject(error));
+      });
+    });
 }
-}
-
-const animeObjectsArray = [];
-fetch(chrome.runtime.getURL('infoAnimes.json'))
-.then(response => response.json())
-.then((json) => {
-    json.animes.forEach(anime => {
-        const newAnime = new Anime(anime.name, 
-            anime.canonEpisodes, 
-            anime.fillerEpisodes, 
-            anime.mixedEpisodes, 
-            anime.canonAnimeEpisodes);
-        animeObjectsArray.push(newAnime);
-    })
-})
-
 
 function getAnimeObjectByName(animeName) {
     return animeObjectsArray.find(anime => anime.name === animeName);
@@ -53,7 +51,6 @@ function getH1Title() {
         resolve(h1Element);
     });
 }
-
 
 // Determina el tag y el color del tag EJ: {CANON, GREEN}
 function episodeInfo(anime, episode) {
@@ -87,11 +84,8 @@ function episodeInfo(anime, episode) {
         default:
             console.log("Número de episodio no encontrado en ninguna categoría.");
     }
-
     return {tag:tag, color:color}
-
 }
-
 
 function setTitle(h1Element, tag, color) {
 
@@ -110,8 +104,6 @@ function getEpisodeNumber(title) {
     let match = title.match(/\d+/);
     return match ? parseInt(match[0]) : null;
 }
-
-
 
 function titleIncludeInformation(titleText) {
     return titleText.includes("CANON") 
@@ -132,7 +124,11 @@ async function setInformation() {
     }
 }
 
-// Ejecuta la función inicialmente.
-setInformation();
+async function main() {
+    await fetchData();
+    await setInformation();
+    intervalId = setInterval(setInformation, 1000);
+}  
 
-intervalId = setInterval(setInformation, 1000);
+main();
+  
