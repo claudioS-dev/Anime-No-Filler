@@ -1,4 +1,3 @@
-//t
 let animeObjectsArray;
 function fetchData() {
     return new Promise((resolve, reject) => {
