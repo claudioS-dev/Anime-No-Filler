@@ -1,41 +1,47 @@
 export function fetchData() {
-    let animeObjectsArray;
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(['cachedAnimeData'], function(result) {
-        const animeData = result.cachedAnimeData;
-  
-        if (animeData){
-            animeObjectsArray = animeData.animes;
-            resolve(animeObjectsArray);
+    return new Promise(async (resolve, reject) => {
+        const localData = await getLocalData();
+
+        if (localData) {
+            resolve(localData);
+            return;
         }
-        
-        fetch(chrome.runtime.getURL('infoAnimes.json'))
-            .then(response => response.json())
-            .then((json) => {
-              chrome.storage.local.set({cachedAnimeData: json});
-              animeObjectsArray = json.animes;
-              resolve(animeObjectsArray);
-            })
-            .catch(error => reject(error));
-      });
+
+        try {
+            const json = await fetchRemoteData();
+            saveLocalData(json);
+            resolve(json);
+        } catch (error) {
+            reject(error);
+        }
     });
 }
+
+function getLocalData() {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(['cachedAnimeData'], (result) => {
+            const animeData = result.cachedAnimeData;
+            if (animeData) {
+                resolve(animeData.animes);
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
+function fetchRemoteData() {
+    return fetch(chrome.runtime.getURL('infoAnimes.json'))
+        .then((response) => response.json());
+}
+
+function saveLocalData(json) {
+    chrome.storage.local.set({ cachedAnimeData: json });
+}
+
 
 export function getAnimeObjectByName(animeName, animeObjectsArray) {
     return animeObjectsArray.find(anime => anime.name === animeName);
-}
-
-export function getAnimeObjectInArray() {
-    return new Promise(function(resolve) {
-        const interval = setInterval(function () {
-            const animeName = document.querySelector('h4.text--gq6o-').textContent;
-            const anime = getAnimeObjectByName(animeName);
-            if (anime) {
-                clearInterval(interval);
-                resolve(anime);
-            }
-        }, 1000);
-    });
 }
 
 // Determina el tag y el color del tag EJ: {CANON, GREEN}

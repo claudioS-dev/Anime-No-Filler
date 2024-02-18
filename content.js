@@ -6,7 +6,6 @@ function getAnimeInfo(animeTitle, animeName) {
     });
 }
 
-
 function getElementInDOM(nameElement) {
     return new Promise(async (resolve) => {
         let element = document.querySelector(nameElement);
