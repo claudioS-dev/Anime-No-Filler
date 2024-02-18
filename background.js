@@ -23,6 +23,5 @@ async function processInfo(message, sendResponse)  {
     const animeObject = getAnimeObjectByName(message.animeName, animeObjectsArray);
     const episode = getEpisodeNumber(message.animeTitle)
     const episodeInfo = getEpisodeInfo(animeObject, episode);
-    console.log("LOG:", episodeInfo) 
     sendResponse(episodeInfo);
 }

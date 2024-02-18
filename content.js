@@ -1,7 +1,6 @@
 function getAnimeInfo(animeTitle, animeName) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage({ action: 'processInfo', animeTitle, animeName }, (response) => {
-            console.log('Respuesta desde background.js:', response);
             resolve(response);
         });
     });
@@ -21,10 +20,18 @@ function getElementInDOM(nameElement) {
     });
 }
 
-function setTitle(h1Element, tag, color) {
+function titleIncludeInformation(titleText) {
+    return titleText.includes("CANON") 
+    || titleText.includes("RELLENO") 
+    || titleText.includes("MIXTO") 
+    || titleText.includes("ANIME CANON");
+}
 
-    const animeName = document.querySelector('h4.text--gq6o-').textContent
-    //if (!getAnimeObjectByName(animeName)) return; // se asegura que el anime este en la lista de animes antes de cambiar el titulo
+function setTitle(h1Element, tag, color) {
+    
+    if (titleIncludeInformation(h1Element.textContent) ){ 
+        return;
+    }
 
     let spanElement = document.createElement("span");
 
@@ -33,14 +40,6 @@ function setTitle(h1Element, tag, color) {
     spanElement.style.color = color;
 
 }
-
-function titleIncludeInformation(titleText) {
-    return titleText.includes("CANON") 
-    || titleText.includes("RELLENO") 
-    || titleText.includes("MIXTO") 
-    || titleText.includes("ANIME CANON");
-}
-
 
 async function setInformation() {
     
@@ -52,10 +51,6 @@ async function setInformation() {
 
     let episodeInfo;
     
-    if (titleIncludeInformation(animeTitle)) {
-        return;
-    }
-
     episodeInfo = await getAnimeInfo(animeTitle, animeName);
     if (episodeInfo){
         setTitle(h1Element, episodeInfo.tag, episodeInfo.color);
@@ -66,8 +61,7 @@ async function setInformation() {
 async function main() {
     await setInformation();
     intervalId = setInterval(setInformation, 1000);
-}  
-
+} 
 
 main();
   
