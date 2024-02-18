@@ -21,11 +21,12 @@ function getLocalData() {
     return new Promise((resolve) => {
         chrome.storage.local.get(['cachedAnimeData'], (result) => {
             const animeData = result.cachedAnimeData;
-            if (animeData) {
-                resolve(animeData.animes);
-            } else {
-                resolve(null);
+
+            if (!animeData) {
+                resolve(null); // Determina la category y el color del tag EJ: {CANON, GREEN}
             }
+
+            resolve(animeData.animes);
         });
     });
 }
@@ -39,48 +40,47 @@ function saveLocalData(json) {
     chrome.storage.local.set({ cachedAnimeData: json });
 }
 
-
 export function getAnimeObjectByName(animeName, animeObjectsArray) {
     return animeObjectsArray.find(anime => anime.name === animeName);
 }
 
-// Determina el tag y el color del tag EJ: {CANON, GREEN}
-export function getEpisodeInfo(anime, episode) {
-    let tag = "";
-    let color = "";
+export function getEpisodeInfo(anime, episode, userColors = {}) {
+    const category = determineCategory(anime, episode);
+    const color = getColorForCategory(category, userColors);
+    return { category, color };
+}
 
+function determineCategory(anime, episode) {
     switch (true) {
         case anime.canonAnimeEpisodes.includes(episode):
-            tag = " ANIME CANON";
-            color = "green";
-            console.log(`Episodio Anime Canon: ${episode}`);
-            break;
-
+            return 'ANIME_CANON';
         case anime.canonEpisodes.includes(episode):
-            tag = " CANON";
-            color = "green";
-            console.log(`Episodio no relleno: ${episode}`);
-            break;
-
+            return 'CANON';
         case anime.fillerEpisodes.includes(episode):
-            tag = " RELLENO";
-            color = "red";
-            console.log(`Episodio de relleno: ${episode}`);
-            break;
-
+            return 'RELLENO';
         case anime.mixedEpisodes.includes(episode):
-            tag = " MIXTO";
-            color = "orange";
-            break;
-
+            return 'MIXTO';
         default:
-            console.log("Número de episodio no encontrado en ninguna categoría.");
+            return;
     }
-    return {tag:tag, color:color}
+}
+
+function getColorForCategory(category, userColors) {
+    return userColors[category] || getDefaultColors()[category] || '';
+}
+
+function getDefaultColors() {
+    return {
+        ANIME_CANON: 'blue',
+        CANON: 'green',
+        RELLENO: 'red',
+        MIXTO: 'orange'
+    };
 }
 
 export function getEpisodeNumber(title) {
     let match = title.match(/\d+/);
     return match ? parseInt(match[0]) : null;
 }
+
 

@@ -26,7 +26,7 @@ function titleIncludeInformation(titleText) {
     || titleText.includes("ANIME CANON");
 }
 
-function setTitle(h1Element, tag, color) {
+function setTitle(h1Element, category, color) {
     
     if (titleIncludeInformation(h1Element.textContent) ){ 
         return;
@@ -34,7 +34,7 @@ function setTitle(h1Element, tag, color) {
 
     let spanElement = document.createElement("span");
 
-    spanElement.innerText = tag;
+    spanElement.innerText = " "+category;
     h1Element.appendChild(spanElement);
     spanElement.style.color = color;
 
@@ -52,7 +52,7 @@ async function setInformation() {
     
     episodeInfo = await getAnimeInfo(animeTitle, animeName);
     if (episodeInfo){
-        setTitle(h1Element, episodeInfo.tag, episodeInfo.color);
+        setTitle(h1Element, episodeInfo.category, episodeInfo.color);
     }
     
 }
