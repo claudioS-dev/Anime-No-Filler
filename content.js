@@ -58,8 +58,12 @@ async function setInformation() {
 }
 
 async function main() {
-    await setInformation();
-    intervalId = setInterval(setInformation, 1000);
+    try {
+        await setInformation();
+        intervalId = setInterval(setInformation, 1000);
+    } catch (error) {
+        console.error("Error in main:", error);
+    }
 } 
 
 main();
