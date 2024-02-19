@@ -47,14 +47,11 @@ async function setInformation() {
     
     const animeTitle = h1Element.textContent;
     const animeName = h4Element.textContent;
+    const episodeInfo = await getAnimeInfo(animeTitle, animeName);
 
-    let episodeInfo;
-    
-    episodeInfo = await getAnimeInfo(animeTitle, animeName);
     if (episodeInfo){
         setTitle(h1Element, episodeInfo.category, episodeInfo.color);
     }
-    
 }
 
 async function main() {

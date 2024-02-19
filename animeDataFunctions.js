@@ -1,15 +1,15 @@
 export function fetchData() {
     return new Promise(async (resolve, reject) => {
-        const localData = await getLocalData();
-
-        if (localData) {
-            resolve(localData);
+        const cacheData = await getCacheData();
+        
+        if (cacheData) {
+            resolve(cacheData);
             return;
         }
 
         try {
             const json = await fetchRemoteData();
-            saveLocalData(json);
+            saveDataInCache(json);
             resolve(json.animes);
         } catch (error) {
             reject(error);
@@ -17,7 +17,7 @@ export function fetchData() {
     });
 }
 
-function getLocalData() {
+function getCacheData() {
     return new Promise((resolve) => {
         chrome.storage.local.get(['cachedAnimeData'], (result) => {
             const animeData = result.cachedAnimeData;
@@ -36,7 +36,7 @@ function fetchRemoteData() {
         .then((response) => response.json());
 }
 
-function saveLocalData(json) {
+function saveDataInCache(json) {
     chrome.storage.local.set({ cachedAnimeData: json });
 }
 
