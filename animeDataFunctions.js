@@ -10,7 +10,7 @@ export function fetchData() {
         try {
             const json = await fetchRemoteData();
             saveLocalData(json);
-            resolve(json);
+            resolve(json.animes);
         } catch (error) {
             reject(error);
         }
@@ -23,7 +23,7 @@ function getLocalData() {
             const animeData = result.cachedAnimeData;
 
             if (!animeData) {
-                resolve(null); // Determina la category y el color del tag EJ: {CANON, GREEN}
+                resolve(null); 
             }
 
             resolve(animeData.animes);
