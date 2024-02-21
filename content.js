@@ -1,108 +1,22 @@
-let animeObjectsArray;
-function fetchData() {
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(['cachedAnimeData'], function(result) {
-        const animeData = result.cachedAnimeData;
-  
-        if (animeData){
-            animeObjectsArray = animeData.animes;
-            resolve();
-        }
-        
-        fetch(chrome.runtime.getURL('infoAnimes.json'))
-            .then(response => response.json())
-            .then((json) => {
-              chrome.storage.local.set({cachedAnimeData: json});
-              animeObjectsArray = json.animes;
-              resolve();
-            })
-            .catch(error => reject(error));
-      });
+function getAnimeInfo(animeTitle, animeName) {
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ action: 'processInfo', animeTitle, animeName }, (response) => {
+            resolve(response);
+        });
     });
 }
 
-function getAnimeObjectByName(animeName) {
-    return animeObjectsArray.find(anime => anime.name === animeName);
-}
-
-function getAnimeObjectInArray() {
-    return new Promise(function(resolve) {
-        const interval = setInterval(function () {
-            const animeName = document.querySelector('h4.text--gq6o-').textContent;
-            const anime = getAnimeObjectByName(animeName);
-            if (anime) {
-                clearInterval(interval);
-                resolve(anime);
-            }
-        }, 1000);
-    });
-}
-
-
-function getH1Title() {
+function getElementInDOM(nameElement) {
     return new Promise(async (resolve) => {
-        let h1Element = document.querySelector("h1");
+        let element = document.querySelector(nameElement);
 
-        while (!(h1Element)) {
+        while (!(element)) {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // pausa la ejecución por 1seg
-            h1Element = document.querySelector("h1");
+            element = document.querySelector(nameElement);
         }
 
-        resolve(h1Element);
+        resolve(element);
     });
-}
-
-// Determina el tag y el color del tag EJ: {CANON, GREEN}
-function episodeInfo(anime, episode) {
-    let tag = "";
-    let color = "";
-
-    switch (true) {
-        case anime.canonAnimeEpisodes.includes(episode):
-            tag = " ANIME CANON";
-            color = "green";
-            console.log(`Episodio Anime Canon: ${episode}`);
-            break;
-
-        case anime.canonEpisodes.includes(episode):
-            tag = " CANON";
-            color = "green";
-            console.log(`Episodio no relleno: ${episode}`);
-            break;
-
-        case anime.fillerEpisodes.includes(episode):
-            tag = " RELLENO";
-            color = "red";
-            console.log(`Episodio de relleno: ${episode}`);
-            break;
-
-        case anime.mixedEpisodes.includes(episode):
-            tag = " MIXTO";
-            color = "orange";
-            break;
-
-        default:
-            console.log("Número de episodio no encontrado en ninguna categoría.");
-    }
-    return {tag:tag, color:color}
-}
-
-function setTitle(h1Element, tag, color) {
-
-    const animeName = document.querySelector('h4.text--gq6o-').textContent
-    if (!getAnimeObjectByName(animeName)) return; // se asegura que el anime este en la lista de animes antes de cambiar el titulo
-
-    let spanElement = document.createElement("span");
-
-    spanElement.innerText = tag;
-    h1Element.appendChild(spanElement);
-    spanElement.style.color = color;
-
-}
-
-function getEpisodeNumber(title) {
-    let match = title.match(/\d+/);
-    return match ? parseInt(match[0]) : null;
 }
 
 function titleIncludeInformation(titleText) {
@@ -112,23 +26,42 @@ function titleIncludeInformation(titleText) {
     || titleText.includes("ANIME CANON");
 }
 
-async function setInformation() {
-    const anime = await getAnimeObjectInArray();
-    const h1 = await getH1Title();
-    const titleText = h1.innerText;
-    const episode = getEpisodeNumber(titleText);
+function setTitle(h1Element, category, color) {
     
-    if (anime.name && !titleIncludeInformation(titleText)) {
-        let info = episodeInfo(anime, episode);
-        setTitle(h1, info.tag, info.color);
+    if (titleIncludeInformation(h1Element.textContent) ){ 
+        return;
+    }
+
+    let spanElement = document.createElement("span");
+
+    spanElement.innerText = " "+category;
+    h1Element.appendChild(spanElement);
+    spanElement.style.color = color;
+
+}
+
+async function setInformation() {
+    
+    const h1Element = await getElementInDOM("h1");
+    const h4Element = await getElementInDOM("h4.text--gq6o-");
+    
+    const animeTitle = h1Element.textContent;
+    const animeName = h4Element.textContent;
+    const episodeInfo = await getAnimeInfo(animeTitle, animeName);
+
+    if (episodeInfo){
+        setTitle(h1Element, episodeInfo.category, episodeInfo.color);
     }
 }
 
 async function main() {
-    await fetchData();
-    await setInformation();
-    intervalId = setInterval(setInformation, 1000);
-}  
+    try {
+        await setInformation();
+        intervalId = setInterval(setInformation, 1000);
+    } catch (error) {
+        console.error("Error in main:", error);
+    }
+} 
 
 main();
   
