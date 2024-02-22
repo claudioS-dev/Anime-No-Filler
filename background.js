@@ -11,10 +11,19 @@ fetchData().then((data) => {
     animeObjectsArray = data;
 });
 
+let buttonStatus = false;
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {
         case 'processInfo':
             processInfo(message, sendResponse);
+            return true;
+        case 'setButtonInfo':
+            buttonStatus = message.buttonStatus;
+            sendResponse('Mensaje recibido');
+            return true;
+        case 'getButtonStatus':
+            sendResponse(buttonStatus);
             return true;
 
         default:

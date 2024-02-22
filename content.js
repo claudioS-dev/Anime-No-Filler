@@ -40,6 +40,19 @@ function setTitle(h1Element, category, color) {
 
 }
 
+async function skipEpisode() {
+    const nextButton = await getElementInDOM("a.playable-card-mini-static__link--UOJQm");
+    nextButton.click();
+}
+
+async function getButtonStatus(){
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ action: 'getButtonStatus',}, (response) => {
+            resolve(response);
+        });
+    });
+}
+
 async function setInformation() {
     
     const h1Element = await getElementInDOM("h1");
@@ -52,6 +65,12 @@ async function setInformation() {
     if (episodeInfo){
         setTitle(h1Element, episodeInfo.category, episodeInfo.color);
     }
+
+    const buttonStatus = await getButtonStatus();
+    if (buttonStatus === true && episodeInfo.category === "RELLENO") {
+        await skipEpisode();
+    }
+
 }
 
 async function main() {
