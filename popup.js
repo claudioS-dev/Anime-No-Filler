@@ -6,9 +6,6 @@ function sendButtonInfo(buttonStatus) {
     });
 }
 
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var toggleSwitch = document.getElementById('ToggleSwitch');
     toggleSwitch.addEventListener('change', async function() {

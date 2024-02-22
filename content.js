@@ -5,7 +5,7 @@ function getAnimeInfo(animeTitle, animeName) {
         });
     });
 }
-
+//test
 function getElementInDOM(nameElement) {
     return new Promise(async (resolve) => {
         let element = document.querySelector(nameElement);
