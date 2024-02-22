@@ -67,7 +67,7 @@ async function setInformation() {
     }
 
     const buttonStatus = await getButtonStatus();
-    if (buttonStatus === true && episodeInfo.category === "RELLENO") {
+    if (buttonStatus === true && episodeInfo.category === "FILLER") {
         await skipEpisode();
     }
 

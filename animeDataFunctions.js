@@ -57,9 +57,9 @@ function determineCategory(anime, episode) {
         case anime.canonEpisodes.includes(episode):
             return 'CANON';
         case anime.fillerEpisodes.includes(episode):
-            return 'RELLENO';
+            return 'FILLER';
         case anime.mixedEpisodes.includes(episode):
-            return 'MIXTO';
+            return 'MIXED';
         default:
             return;
     }
@@ -73,8 +73,8 @@ function getDefaultColors() {
     return {
         ANIME_CANON: 'blue',
         CANON: 'green',
-        RELLENO: 'red',
-        MIXTO: 'orange'
+        FILLER: 'red',
+        MIXED: 'orange'
     };
 }
 
