@@ -4,11 +4,14 @@
 }
 body {
     width: 200px;
-    height: 300px;
+    height: 100px;
     padding: 10px;
     scrollbar-color: #f47521 #59595B;
     scrollbar-width: auto;
     margin-bottom: 10rem;
+  }
+  h1 {
+    margin-left: 2rem;
   }
   
   button {
