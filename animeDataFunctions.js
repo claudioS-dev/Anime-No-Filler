@@ -82,5 +82,3 @@ export function getEpisodeNumber(title) {
     let match = title.match(/\d+/);
     return match ? parseInt(match[0]) : null;
 }
-
-

@@ -4,7 +4,7 @@
 }
 body {
     width: 200px;
-    height: 100px;
+    height: 210px;
     padding: 10px;
     scrollbar-color: #f47521 #59595B;
     scrollbar-width: auto;
@@ -55,7 +55,7 @@ justify-content: center;
 
  /* slide button */
 
- .switch {
+.switch {
   position: relative;
   display: inline-block;
   width: 60px;

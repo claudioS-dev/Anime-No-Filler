@@ -11,4 +11,4 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleSwitch.addEventListener('change', async function() {
         await sendButtonInfo(toggleSwitch.checked);
     });
-  });
+});
