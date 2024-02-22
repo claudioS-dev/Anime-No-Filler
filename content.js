@@ -21,8 +21,8 @@ function getElementInDOM(nameElement) {
 
 function titleIncludeInformation(titleText) {
     return titleText.includes("CANON") 
-    || titleText.includes("RELLENO") 
-    || titleText.includes("MIXTO") 
+    || titleText.includes("FILLER") 
+    || titleText.includes("MIXED") 
     || titleText.includes("ANIME CANON");
 }
 
