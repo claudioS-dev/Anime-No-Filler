@@ -40,9 +40,20 @@ function setTitle(h1Element, category, color) {
 
 }
 
-async function skipEpisode() {
+function getEpisodeNumber(title) {
+    let match = title.match(/\d+/);
+    return match ? parseInt(match[0]) : null;
+}
+
+async function skipEpisode(animeTitle) {
+    
     const nextButton = await getElementInDOM("a.playable-card-mini-static__link--UOJQm");
-    nextButton.click();
+    const thisEpisode = getEpisodeNumber(animeTitle);
+    const episodeNumberButton = getEpisodeNumber(nextButton.title);
+    
+    if (episodeNumberButton > thisEpisode) {
+        nextButton.click();
+    }
 }
 
 async function getButtonStatus(){
@@ -68,7 +79,7 @@ async function setInformation() {
 
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
-        await skipEpisode();
+        await skipEpisode(animeTitle);
     }
 
 }
