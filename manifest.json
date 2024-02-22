@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "One Piece - No relleno Crunchyroll",
-    "version": "1.2",
-    "description": "Extensión para verificar si un capítulo es de relleno en Crunchyroll",
+    "name": "AnimeNoFiller - Crunchyroll",
+    "version": "1.0",
+    "description": "With AnimeNoFiller, you'll never have to wonder again whether an episode is canon or filler.",
     "icons": {
         "128": "Icons/logo3.png"
     },
