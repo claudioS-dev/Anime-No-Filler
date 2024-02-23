@@ -1,11 +1,11 @@
-function getAnimeInfo(animeTitle, animeName) {
+function getAnimeInfo(episode, animeName) {
     return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ action: 'processInfo', animeTitle, animeName }, (response) => {
+        chrome.runtime.sendMessage({ action: 'processInfo', episode, animeName }, (response) => {
             resolve(response);
         });
     });
 }
-//test
+
 function getElementInDOM(nameElement) {
     return new Promise(async (resolve) => {
         let element = document.querySelector(nameElement);
@@ -48,7 +48,7 @@ function getEpisodeNumber(title) {
 
 async function skipEpisode(animeTitle) {
     
-    const nextButton = await getElementInDOM("a.playable-card-mini-static__link--UOJQm");
+    const nextButton = document.querySelector("a.playable-card-mini-static__link--UOJQm");
     const thisEpisode = getEpisodeNumber(animeTitle);
     const episodeNumberButton = getEpisodeNumber(nextButton.title);
     
@@ -65,32 +65,63 @@ async function getButtonStatus(){
     });
 }
 
+function getElementsID(){
+    
+    switch (window.location.hostname) {
+        case "www.crunchyroll.com":
+            titleID = "h1";
+            nameID = "h4.text--gq6o-";
+            break;
+        case "www3.animeflv.net":
+            titleID = "h1.Title";
+            nameID = "h2.SubTitle";
+            break;
+        default:
+            null;
+    }
+    return {titleID, nameID};
+
+}
+
+function getInfo(titleComponent, subTitleComponent){
+    switch (window.location.hostname) {
+        case "www.crunchyroll.com":
+            animeName = subTitleComponent.textContent;
+            animeEpisode = getEpisodeNumber(titleComponent.textContent)
+            return {animeName, animeEpisode};
+        case "www3.animeflv.net":
+            animeName = titleComponent.textContent.match(/(.+?) Episodio/)[1];
+            animeEpisode = getEpisodeNumber(subTitleComponent.textContent)
+            return {animeName, animeEpisode};
+        default:
+            return;
+    }
+}
+
 async function setInformation() {
     
-    const h1Element = await getElementInDOM("h1");
-    const h4Element = await getElementInDOM("h4.text--gq6o-");
-    
-    const animeTitle = h1Element.textContent;
-    const animeName = h4Element.textContent;
-    
-    const episodeInfo = await getAnimeInfo(animeTitle, animeName);
+    const { titleID, nameID } = getElementsID();   
+    const titleComponent = await getElementInDOM(titleID);
+    const subTitleComponent = await getElementInDOM(nameID);
+      
+    const { animeName, animeEpisode } = getInfo(titleComponent, subTitleComponent);
+    const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
     
 
     if (episodeInfo){
-        setTitle(h1Element, episodeInfo.category, episodeInfo.color);
+        setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
 
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
-        await skipEpisode(animeTitle);
+        await skipEpisode(animeEpisode);
     }
 
 }
 
 async function main() {
     try {
-        await setInformation();
         intervalId = setInterval(setInformation, 1000);
     } catch (error) {
         console.error("Error in main:", error);

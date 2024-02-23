@@ -32,10 +32,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-async function processInfo({ animeName, animeTitle }, sendResponse) {
+async function processInfo({ animeName, episode }, sendResponse) {
     try {
         const animeObject = getAnimeObjectByName(animeName, animeObjectsArray);
-        const episode = getEpisodeNumber(animeTitle);
+        //const episode = getEpisodeNumber(animeTitle);
         const episodeInfo = getEpisodeInfo(animeObject, episode);
         sendResponse(episodeInfo);
     } catch (error) {
