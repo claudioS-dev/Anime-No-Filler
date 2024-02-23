@@ -5,6 +5,7 @@ import {
     getEpisodeNumber,
 } from "./animeDataFunctions.js"
 
+console.log("ME INICIE")
 // carga el array de animes
 let animeObjectsArray;
 fetchData().then((data) => {

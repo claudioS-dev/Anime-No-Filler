@@ -34,7 +34,7 @@ function setTitle(h1Element, category, color) {
 
     const spanElement = document.createElement("span");
     const categoryFormatted = category.replace("_", " ");
-    
+
     spanElement.innerText = " "+categoryFormatted;
     h1Element.appendChild(spanElement);
     spanElement.style.color = color;
@@ -72,7 +72,9 @@ async function setInformation() {
     
     const animeTitle = h1Element.textContent;
     const animeName = h4Element.textContent;
+    
     const episodeInfo = await getAnimeInfo(animeTitle, animeName);
+    
 
     if (episodeInfo){
         setTitle(h1Element, episodeInfo.category, episodeInfo.color);
