@@ -79,6 +79,7 @@ async function setInformation() {
 
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
+        intervalId = setInterval(skipEpisode, 2000);
         await skipEpisode(animeTitle);
     }
 
