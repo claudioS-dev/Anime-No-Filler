@@ -41,6 +41,9 @@ function saveDataInCache(json) {
 }
 
 export function getAnimeObjectByName(animeName, animeObjectsArray) {
+    if (animeObjectsArray === undefined || animeName === undefined) {
+        return null;
+    }
     return animeObjectsArray.find(anime => anime.name === animeName);
 }
 

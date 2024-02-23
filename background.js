@@ -5,6 +5,7 @@ import {
     getEpisodeNumber,
 } from "./animeDataFunctions.js"
 
+console.log("ME INICIE")
 // carga el array de animes
 let animeObjectsArray;
 fetchData().then((data) => {
@@ -31,10 +32,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-async function processInfo({ animeName, animeTitle }, sendResponse) {
+async function processInfo({ animeName, episode }, sendResponse) {
     try {
         const animeObject = getAnimeObjectByName(animeName, animeObjectsArray);
-        const episode = getEpisodeNumber(animeTitle);
         const episodeInfo = getEpisodeInfo(animeObject, episode);
         sendResponse(episodeInfo);
     } catch (error) {
