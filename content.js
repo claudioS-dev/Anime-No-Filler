@@ -66,20 +66,20 @@ async function getButtonStatus(){
 }
 
 function getElementsID(){
-    
+    let titleID, subTitleID;
     switch (window.location.hostname) {
         case "www.crunchyroll.com":
             titleID = "h1";
-            nameID = "h4.text--gq6o-";
+            subTitleID = "h4.text--gq6o-";
             break;
         case "www3.animeflv.net":
             titleID = "h1.Title";
-            nameID = "h2.SubTitle";
+            subTitleID = "h2.SubTitle";
             break;
         default:
             null;
     }
-    return {titleID, nameID};
+    return {titleID, subTitleID};
 
 }
 
@@ -99,11 +99,11 @@ function getInfo(titleComponent, subTitleComponent){
 }
 
 async function setInformation() {
-    
-    const { titleID, nameID } = getElementsID();   
+    console.log("WAAAAA")
+    const { titleID, subTitleID } = getElementsID();   
     const titleComponent = await getElementInDOM(titleID);
-    const subTitleComponent = await getElementInDOM(nameID);
-      
+    const subTitleComponent = await getElementInDOM(subTitleID);
+    console.log("WAAAAA2")  
     const { animeName, animeEpisode } = getInfo(titleComponent, subTitleComponent);
     const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
     
@@ -111,7 +111,7 @@ async function setInformation() {
     if (episodeInfo){
         setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
-
+    console.log("WAAAAA3")  
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
