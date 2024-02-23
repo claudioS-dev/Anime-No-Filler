@@ -46,13 +46,13 @@ function getEpisodeNumber(title) {
     return match ? parseInt(match[0]) : null;
 }
 
-async function skipEpisode(animeTitle) {
+async function skipEpisode(currentEpisode) {
     
     const nextButton = document.querySelector("a.playable-card-mini-static__link--UOJQm");
-    const thisEpisode = getEpisodeNumber(animeTitle);
+  
     const episodeNumberButton = getEpisodeNumber(nextButton.title);
     
-    if (episodeNumberButton > thisEpisode) {
+    if (episodeNumberButton > currentEpisode) {
         nextButton.click();
     }
 }
@@ -84,26 +84,29 @@ function getElementsID(){
 }
 
 function getInfo(titleComponent, subTitleComponent){
+    let animeName, animeEpisode;
     switch (window.location.hostname) {
         case "www.crunchyroll.com":
             animeName = subTitleComponent.textContent;
             animeEpisode = getEpisodeNumber(titleComponent.textContent)
-            return {animeName, animeEpisode};
+            break;
         case "www3.animeflv.net":
             animeName = titleComponent.textContent.match(/(.+?) Episodio/)[1];
             animeEpisode = getEpisodeNumber(subTitleComponent.textContent)
-            return {animeName, animeEpisode};
+            break;
         default:
             return;
     }
+    animeName = animeName.toLowerCase();
+    return {animeName, animeEpisode}
 }
 
 async function setInformation() {
-    console.log("WAAAAA")
+    
     const { titleID, subTitleID } = getElementsID();   
     const titleComponent = await getElementInDOM(titleID);
     const subTitleComponent = await getElementInDOM(subTitleID);
-    console.log("WAAAAA2")  
+    
     const { animeName, animeEpisode } = getInfo(titleComponent, subTitleComponent);
     const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
     
@@ -111,7 +114,7 @@ async function setInformation() {
     if (episodeInfo){
         setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
-    console.log("WAAAAA3")  
+     
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
