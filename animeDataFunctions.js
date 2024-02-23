@@ -71,7 +71,7 @@ function getColorForCategory(category, userColors) {
 
 function getDefaultColors() {
     return {
-        ANIME_CANON: 'blue',
+        ANIME_CANON: 'green',
         CANON: 'green',
         FILLER: 'red',
         MIXED: 'orange'

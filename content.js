@@ -32,16 +32,17 @@ function setTitle(h1Element, category, color) {
         return;
     }
 
-    let spanElement = document.createElement("span");
-
-    spanElement.innerText = " "+category;
+    const spanElement = document.createElement("span");
+    const categoryFormatted = category.replace("_", " ");
+    
+    spanElement.innerText = " "+categoryFormatted;
     h1Element.appendChild(spanElement);
     spanElement.style.color = color;
 
 }
 
 function getEpisodeNumber(title) {
-    let match = title.match(/\d+/);
+    const match = title.match(/\d+/);
     return match ? parseInt(match[0]) : null;
 }
 
