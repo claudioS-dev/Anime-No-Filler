@@ -11,7 +11,7 @@ fetchData().then((data) => {
     animeObjectsArray = data;
 });
 
-let buttonStatus = false;
+let buttonStatus = true;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {

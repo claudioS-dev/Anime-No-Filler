@@ -1,15 +1,7 @@
 export function fetchData() {
     return new Promise(async (resolve, reject) => {
-        //const cacheData = await getCacheData();
-        
-        /* if (cacheData) {
-            resolve(cacheData);
-            return;
-        } */
-
         try {
             const json = await fetchRemoteData();
-            //saveDataInCache(json);
             resolve(json.animes);
         } catch (error) {
             reject(error);
@@ -17,28 +9,10 @@ export function fetchData() {
     });
 }
 
-/* function getCacheData() {
-    return new Promise((resolve) => {
-        chrome.storage.local.get(['cachedAnimeData'], (result) => {
-            const animeData = result.cachedAnimeData;
-
-            if (!animeData) {
-                resolve(null); 
-            }
-
-            resolve(animeData.animes);
-        });
-    });
-} */
-
 function fetchRemoteData() {
     return fetch(chrome.runtime.getURL('infoAnimes.json'))
         .then((response) => response.json());
 }
-
-/* function saveDataInCache(json) {
-    chrome.storage.local.set({ cachedAnimeData: json });
-} */
 
 export function getAnimeObjectByName(animeName, animeObjectsArray) {
     if (animeObjectsArray === undefined || animeName === undefined) {
