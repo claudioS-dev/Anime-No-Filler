@@ -108,7 +108,10 @@ async function main(siteElementsID) {
     
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
     
+    const startTime = performance.now();
     const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
+    const endTime = performance.now();
+    console.log("Time to get anime info:", endTime - startTime);
     if (episodeInfo){
         setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
