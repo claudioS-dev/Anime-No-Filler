@@ -14,18 +14,15 @@ function sendButtonInfo(buttonStatus) {
         });
     });
 }
-async function main(){
 
-    var toggleSwitch = document.getElementById('ToggleSwitch');
-    var status = await getButtonStatus();
- 
-    toggleSwitch.checked = status;
 
-    document.addEventListener('DOMContentLoaded', function() {
-        toggleSwitch.addEventListener('change', async function() {
-            await sendButtonInfo(toggleSwitch.checked);
-        });
+var toggleSwitch = document.getElementById('ToggleSwitch');
+document.addEventListener('DOMContentLoaded', async function() {
+    toggleSwitch.checked = await getButtonStatus();
+});
+document.addEventListener('DOMContentLoaded', function() {
+    toggleSwitch.addEventListener('change', async function() {
+        toggleSwitch.checked = await sendButtonInfo(toggleSwitch.checked);
     });
-}
+});
 
-//main()

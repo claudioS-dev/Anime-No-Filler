@@ -113,8 +113,7 @@ async function main(siteElementsID) {
         setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
      
-    //const buttonStatus = await getButtonStatus();
-    const buttonStatus = true;
+    const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
         await skipEpisode(animeEpisode, siteElementsID, site);
@@ -126,8 +125,7 @@ async function init() {
     try {
         const siteElementsID = {
             "www.crunchyroll.com": { titleID: "h1", subTitleID: "h4.text--gq6o-", nextEpisodeID: "a.playable-card-mini-static__link--UOJQm" },
-            "www3.animeflv.net": { titleID: "h1.Title", subTitleID: "h2.SubTitle", nextEpisodeID: "a.CapNvNx.fa-chevron-right" },
-            
+            "www3.animeflv.net": { titleID: "h1.Title", subTitleID: "h2.SubTitle", nextEpisodeID: "a.CapNvNx.fa-chevron-right" },    
         };
         intervalId = setInterval(() => main(siteElementsID), 1000);
     } catch (error) {

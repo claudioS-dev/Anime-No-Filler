@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             return true;
         case 'setButtonInfo':
             buttonStatus = message.buttonStatus;
-            sendResponse('Mensaje recibido');
+            sendResponse(buttonStatus);
             return true;
         case 'getButtonStatus':
             sendResponse(buttonStatus);
