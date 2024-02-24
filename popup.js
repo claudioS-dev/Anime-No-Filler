@@ -1,3 +1,12 @@
+function getButtonStatus(){
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ action: 'getButtonStatus',}, (response) => {
+            resolve(response);
+        });
+    });
+}
+
+
 function sendButtonInfo(buttonStatus) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage({ action: 'setButtonInfo', buttonStatus}, (response) => {
@@ -5,10 +14,18 @@ function sendButtonInfo(buttonStatus) {
         });
     });
 }
+async function main(){
 
-document.addEventListener('DOMContentLoaded', function() {
     var toggleSwitch = document.getElementById('ToggleSwitch');
-    toggleSwitch.addEventListener('change', async function() {
-        await sendButtonInfo(toggleSwitch.checked);
+    var status = await getButtonStatus();
+ 
+    toggleSwitch.checked = status;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleSwitch.addEventListener('change', async function() {
+            await sendButtonInfo(toggleSwitch.checked);
+        });
     });
-});
+}
+
+//main()

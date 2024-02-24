@@ -2,7 +2,6 @@ import {
     fetchData,
     getAnimeObjectByName,
     getEpisodeInfo,
-    getEpisodeNumber,
 } from "./animeDataFunctions.js"
 
 
