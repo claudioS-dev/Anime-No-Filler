@@ -6,7 +6,6 @@ function getButtonStatus(){
     });
 }
 
-
 function sendButtonInfo(buttonStatus) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage({ action: 'setButtonInfo', buttonStatus}, (response) => {
@@ -14,7 +13,6 @@ function sendButtonInfo(buttonStatus) {
         });
     });
 }
-
 
 var toggleSwitch = document.getElementById('ToggleSwitch');
 document.addEventListener('DOMContentLoaded', async function() {
