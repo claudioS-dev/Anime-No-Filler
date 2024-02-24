@@ -15,7 +15,7 @@ body{
 }
 
 .header {
-  position: relative;
+  position: absolute;
   Width: 428px;
   Height: 329px;
   background: url("./img/fp/op.png");
@@ -195,6 +195,35 @@ color: #ffffff;
   letter-spacing: -0.04em;
   text-align: left;
   color: #FFFFFF;
+}
+
+.timein {
+  position: absolute;
+  width: 147px;
+  height: 36px;
+  top: 136px;
+  left: 36px;
+  border-radius: 7px;
+  background: #37383C29;
+  color: #525254;
+  text-decoration: none;
+  border: none;
+}
+
+.submit {
+  position: absolute;
+  width: 92px;
+  height: 36px;
+  top: 136px;
+  left: 230px;
+  border-radius: 7px;
+  background: #37383C29;
+  color: white;
+  text-decoration: none;
+  border: none;
+  background-image: url("./img/Icons/arrow\ left.svg");
+  background-position: center right;
+  background-repeat: no-repeat;
 }
 
 .footer{
