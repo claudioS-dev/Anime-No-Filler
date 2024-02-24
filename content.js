@@ -71,7 +71,6 @@ async function getButtonStatus(){
     });
 }
 
-
 function getTitleID(siteElementsID, site) {
     return siteElementsID[site]?.titleID || null;
 }
