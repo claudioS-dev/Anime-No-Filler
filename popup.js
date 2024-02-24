@@ -1,3 +1,11 @@
+function getButtonStatus(){
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ action: 'getButtonStatus',}, (response) => {
+            resolve(response);
+        });
+    });
+}
+
 function sendButtonInfo(buttonStatus) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage({ action: 'setButtonInfo', buttonStatus}, (response) => {
@@ -6,16 +14,17 @@ function sendButtonInfo(buttonStatus) {
     });
 }
 
+var toggleSwitch = document.getElementById('ToggleSwitch');
+document.addEventListener('DOMContentLoaded', async function() {
+    toggleSwitch.checked = await getButtonStatus();
+});
 document.addEventListener('DOMContentLoaded', function() {
-    var toggleSwitch = document.getElementById('ToggleSwitch');
     toggleSwitch.addEventListener('change', async function() {
-        await sendButtonInfo(toggleSwitch.checked);
+        toggleSwitch.checked = await sendButtonInfo(toggleSwitch.checked);
     });
 });
 
-
 const karrusel = document.querySelector(".karrusel");
-
 
 let isDragStart = false, prevPageX, prevScrollLeft;
 
@@ -49,9 +58,10 @@ function removeScrollbar(){
         'html::-webkit-scrollbar{display:none !important}' +
         'body::-webkit-scrollbar{display:none !important}';
     document.getElementsByTagName('body')[0].appendChild(styleElement);
-    }
-    
-    removeScrollbar()
+}   
+removeScrollbar()
 
 /*En caso de que se quiera restaurar la scrollbar utilizar
 $('#remove-scroll-style').remove();*/
+
+

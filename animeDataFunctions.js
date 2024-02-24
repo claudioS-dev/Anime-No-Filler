@@ -1,15 +1,15 @@
 export function fetchData() {
     return new Promise(async (resolve, reject) => {
-        const cacheData = await getCacheData();
+        //const cacheData = await getCacheData();
         
-        if (cacheData) {
+        /* if (cacheData) {
             resolve(cacheData);
             return;
-        }
+        } */
 
         try {
             const json = await fetchRemoteData();
-            saveDataInCache(json);
+            //saveDataInCache(json);
             resolve(json.animes);
         } catch (error) {
             reject(error);
@@ -17,7 +17,7 @@ export function fetchData() {
     });
 }
 
-function getCacheData() {
+/* function getCacheData() {
     return new Promise((resolve) => {
         chrome.storage.local.get(['cachedAnimeData'], (result) => {
             const animeData = result.cachedAnimeData;
@@ -29,18 +29,21 @@ function getCacheData() {
             resolve(animeData.animes);
         });
     });
-}
+} */
 
 function fetchRemoteData() {
     return fetch(chrome.runtime.getURL('infoAnimes.json'))
         .then((response) => response.json());
 }
 
-function saveDataInCache(json) {
+/* function saveDataInCache(json) {
     chrome.storage.local.set({ cachedAnimeData: json });
-}
+} */
 
 export function getAnimeObjectByName(animeName, animeObjectsArray) {
+    if (animeObjectsArray === undefined || animeName === undefined) {
+        return null;
+    }
     return animeObjectsArray.find(anime => anime.name === animeName);
 }
 
@@ -76,9 +79,4 @@ function getDefaultColors() {
         FILLER: 'red',
         MIXED: 'orange'
     };
-}
-
-export function getEpisodeNumber(title) {
-    let match = title.match(/\d+/);
-    return match ? parseInt(match[0]) : null;
 }
