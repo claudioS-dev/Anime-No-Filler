@@ -26,9 +26,9 @@ function titleIncludeInformation(titleText) {
     || titleText.includes("ANIME CANON");
 }
 
-function setTitle(h1Element, category, color) {
+function setTitle(titleElement, category, color) {
     
-    if (titleIncludeInformation(h1Element.textContent) ){ 
+    if (titleIncludeInformation(titleElement.textContent) ){ 
         return;
     }
 
@@ -36,7 +36,7 @@ function setTitle(h1Element, category, color) {
     const categoryFormatted = category.replace("_", " ");
 
     spanElement.innerText = " "+categoryFormatted;
-    h1Element.appendChild(spanElement);
+    titleElement.appendChild(spanElement);
     spanElement.style.color = color;
 
 }
@@ -83,12 +83,16 @@ function getNameAndEpisode(titleComponent, subTitleComponent, site){
     let animeName, animeEpisode;
     switch (site) {
         case "www.crunchyroll.com":
-            animeEpisode = getEpisodeNumber(titleComponent.textContent)
+            animeEpisode = getEpisodeNumber(titleComponent.textContent);
             animeName = subTitleComponent.textContent;
             break;
         case "www3.animeflv.net":
-            animeEpisode = getEpisodeNumber(subTitleComponent.textContent)
+            animeEpisode = getEpisodeNumber(subTitleComponent.textContent);
             animeName = titleComponent.textContent.match(/(.+?) Episodio/)[1];
+            break;
+        case "9animetv.to":
+            animeEpisode = titleComponent.querySelector('#cm-episode-number').textContent;
+            animeName = subTitleComponent.textContent;
             break;
         default:
             return;
@@ -99,7 +103,7 @@ function getNameAndEpisode(titleComponent, subTitleComponent, site){
 
 async function main(siteElementsID) {
     const site = window.location.hostname;
-    
+    console.log("asd",site)
     const titleID = getTitleID(siteElementsID, site);
     const subTitleID = getSubTitleID(siteElementsID, site);
 
@@ -108,10 +112,10 @@ async function main(siteElementsID) {
     
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
     
-    const startTime = performance.now();
+    //const startTime = performance.now();
     const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
-    const endTime = performance.now();
-    console.log("Time to get anime info:", endTime - startTime);
+    //const endTime = performance.now();
+    //console.log("Time to get anime info:", endTime - startTime);
     if (episodeInfo){
         setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
@@ -128,7 +132,8 @@ async function init() {
     try {
         const siteElementsID = {
             "www.crunchyroll.com": { titleID: "h1", subTitleID: "h4.text--gq6o-", nextEpisodeID: "a.playable-card-mini-static__link--UOJQm" },
-            "www3.animeflv.net": { titleID: "h1.Title", subTitleID: "h2.SubTitle", nextEpisodeID: "a.CapNvNx.fa-chevron-right" },    
+            "www3.animeflv.net": { titleID: "h1.Title", subTitleID: "h2.SubTitle", nextEpisodeID: "a.CapNvNx.fa-chevron-right" },
+            "9animetv.to": { titleID: 'a.btn.btn-sm.btn-comment-tab[data-type="episode"]', subTitleID: "h2.film-name", nextEpisodeID: "a.btn.btn-sm.btn-next" }    
         };
         intervalId = setInterval(() => main(siteElementsID), 1000);
     } catch (error) {
