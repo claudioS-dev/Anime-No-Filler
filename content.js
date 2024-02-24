@@ -46,13 +46,19 @@ function getEpisodeNumber(title) {
     return match ? parseInt(match[0]) : null;
 }
 
-async function skipEpisode(animeTitle) {
-    
-    const nextButton = document.querySelector("a.playable-card-mini-static__link--UOJQm");
-    const thisEpisode = getEpisodeNumber(animeTitle);
+function getNextEpisodeID(siteElementsID, site) {
+    return siteElementsID[site]?.nextEpisodeID || null;
+}
+
+async function skipEpisode(currentEpisode, siteElementsID, site) {
+    const nextEpisodeID = getNextEpisodeID(siteElementsID, site);
+    const nextButton = document.querySelector(nextEpisodeID);
+    if (site != "www.crunchyroll.com") {
+        nextButton.click()
+        return;
+    }
     const episodeNumberButton = getEpisodeNumber(nextButton.title);
-    
-    if (episodeNumberButton > thisEpisode) {
+    if (episodeNumberButton > currentEpisode) {
         nextButton.click();
     }
 }
@@ -65,67 +71,66 @@ async function getButtonStatus(){
     });
 }
 
-function getElementsID(){
-    let titleID, subTitleID;
-    switch (window.location.hostname) {
-        case "www.crunchyroll.com":
-            titleID = "h1";
-            subTitleID = "h4.text--gq6o-";
-            break;
-        case "www3.animeflv.net":
-            titleID = "h1.Title";
-            subTitleID = "h2.SubTitle";
-            break;
-        default:
-            null;
-    }
-    return {titleID, subTitleID};
-
+function getTitleID(siteElementsID, site) {
+    return siteElementsID[site]?.titleID || null;
 }
 
-function getInfo(titleComponent, subTitleComponent){
-    switch (window.location.hostname) {
+function getSubTitleID(siteElementsID, site) {
+    return siteElementsID[site]?.subTitleID || null;
+}
+
+function getNameAndEpisode(titleComponent, subTitleComponent, site){
+    let animeName, animeEpisode;
+    switch (site) {
         case "www.crunchyroll.com":
-            animeName = subTitleComponent.textContent;
             animeEpisode = getEpisodeNumber(titleComponent.textContent)
-            return {animeName, animeEpisode};
+            animeName = subTitleComponent.textContent;
+            break;
         case "www3.animeflv.net":
-            animeName = titleComponent.textContent.match(/(.+?) Episodio/)[1];
             animeEpisode = getEpisodeNumber(subTitleComponent.textContent)
-            return {animeName, animeEpisode};
+            animeName = titleComponent.textContent.match(/(.+?) Episodio/)[1];
+            break;
         default:
             return;
     }
+    animeName = animeName.toLowerCase();
+    return {animeEpisode, animeName}
 }
 
-async function setInformation() {
-    console.log("WAAAAA")
-    const { titleID, subTitleID } = getElementsID();   
+async function main(siteElementsID) {
+    const site = window.location.hostname;
+    
+    const titleID = getTitleID(siteElementsID, site);
+    const subTitleID = getSubTitleID(siteElementsID, site);
+
     const titleComponent = await getElementInDOM(titleID);
     const subTitleComponent = await getElementInDOM(subTitleID);
-    console.log("WAAAAA2")  
-    const { animeName, animeEpisode } = getInfo(titleComponent, subTitleComponent);
-    const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
     
-
+    const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
+    
+    const episodeInfo = await getAnimeInfo(animeEpisode, animeName);
     if (episodeInfo){
         setTitle(titleComponent, episodeInfo.category, episodeInfo.color);
     }
-    console.log("WAAAAA3")  
+     
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
-        await skipEpisode(animeEpisode);
+        await skipEpisode(animeEpisode, siteElementsID, site);
     }
 
 }
 
-async function main() {
+async function init() {
     try {
-        intervalId = setInterval(setInformation, 1000);
+        const siteElementsID = {
+            "www.crunchyroll.com": { titleID: "h1", subTitleID: "h4.text--gq6o-", nextEpisodeID: "a.playable-card-mini-static__link--UOJQm" },
+            "www3.animeflv.net": { titleID: "h1.Title", subTitleID: "h2.SubTitle", nextEpisodeID: "a.CapNvNx.fa-chevron-right" },    
+        };
+        intervalId = setInterval(() => main(siteElementsID), 1000);
     } catch (error) {
         console.error("Error in main:", error);
     }
 } 
 
-main();
+init();
