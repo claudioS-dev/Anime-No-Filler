@@ -1,58 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador de relleno</title>
-    <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-    <!--  
-    <h1>Configuración</h1>
-    <div id="donacion">
-        <h4>Apoyanos</h4>
-        <img src="Icons/heart.png" alt="Corazón"/>
-    </div>
-    -->
-    <h3>Support the community in the future 🧡</h2>
-    <h2>Do you want them to skip the filler chapters?</h2>
-    <label class="switch">
-        <input type="checkbox" id="ToggleSwitch">
-        <span class="slider round"></span>
-    </label>
-    <script src="popup.js"></script>
-    <!-- 
-    <div class="ajustes">
-        <h2>¿Información del capitulo correcta?</h2>
-        <button>Sí</button>
-        <button>No</button>
-    </div>
-    <h2>¿En que minuto comienza el capitulo?</h2>
-    <label for="appt">Seleccione minuto:</label>
-    <input type="time" id="appt" name="appt">
-    <button>Enviar</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verificador de relleno</title>
+        <link rel="stylesheet" href="popup.css">
+        <script src="popup.js" defer></script>
+    </head>
 
-    <h1>Configuración De usuario</h1>
-    <h2>Animes para ver</h1>
-    <div class="animesParaVer">
-        <label for="OnePice">One Piece</label>
-        <input type="checkbox" name="OnePice" id="OnePice" />
-    </div>
-    <div class="animesParaVer">
-        <label for="Naruto">Naruto</label>
-        <input type="checkbox" name="Naruto" id="Naruto" />
-    </div>
-    -->
-    <h1>
-        List of anime Crunchyroll
-    </h1>
-    <ul>
-        <li>Naruto Shippuden</li>
-        <li>One Piece</li>
-        <li>Naruto</li>
-        <li>Black Clover</li>
-        <li>Bleach</li>
-        <li>BORUTO: NARUTO NEXT GENERATIONS</li>
-    </ul>
-</body>
+    <body>
+        <section class="layout">
+            <div class="header">
+                <div class="img"></div>
+                <div class="coffee"></div>
+                <div class="skip">Skip Fill</div>
+                <!-- button -->
+                <input class="toggle" id="ToggleSwitch" type="checkbox" value="1"/>
+                <!-- button -->
+                <h2 class="cap">One Piece</h2>
+            </div>
+            
+            <div class="rate-container">
+                <div>
+                    <p>Is the episode well catallogated?</p>
+                </div>
+                <div class="aa">
+                    <img class="dislike" src="./img/Icons/dislike.png" alt="img">
+                    <img class="like" src="./img/Icons/like.png" alt="img">
+                </div>
+                
+            </div>
+
+            <div class="minute">
+                <p>contribute to the community.</p>
+                <p2>At what minute does the chapter start?</p2>
+                <input class="timein"  type="time" id="appt" name="appt" min="09:00" max="18:00" required />
+                <button class="submit" type="submit">Send</button>
+            </div>
+
+            <div class="footer">
+                <div class="wrapper">
+                    <h2>List of anime</h2>
+                    <a href="https://www.crunchyroll.com/es/" target="_blank">See all</a>
+                    <div class="karrusel">
+                        <img src="./img/fp/op.png" alt="img">       
+                        <img src="./img/fp/naruto.png" alt="img">
+                        <img src="./img/fp/narutosh.png" alt="img">
+                        <img src="./img/fp/boruto.jpe" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/bleach.png" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/BC.jpeg" alt="img">
+                        <img src="./img/fp/op.png" alt="img">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>
