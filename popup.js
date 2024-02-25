@@ -1,26 +1,27 @@
-function getButtonStatus(){
-    return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ action: 'getButtonStatus',}, (response) => {
-            resolve(response);
-        });
+function getButtonStatus() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get('skipButtonState', function(result) {
+        const buttonState = result.skipButtonState;
+        if (buttonState === undefined) {
+            reject(new Error('No se pudo obtener el estado del botón.'));
+        }
+        resolve(buttonState);
+      });
     });
 }
 
-function sendButtonInfo(buttonStatus) {
-    return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ action: 'setButtonInfo', buttonStatus}, (response) => {
-            resolve(response);
-        });
-    });
+function saveButtonStatus(buttonState) {
+    chrome.storage.local.set({ 'skipButtonState': buttonState });
 }
 
 var toggleSwitch = document.getElementById('ToggleSwitch');
 document.addEventListener('DOMContentLoaded', async function() {
-    toggleSwitch.checked = await getButtonStatus();
+    const buttonStatus = await getButtonStatus();
+    toggleSwitch.checked = buttonStatus;
 });
 document.addEventListener('DOMContentLoaded', function() {
     toggleSwitch.addEventListener('change', async function() {
-        toggleSwitch.checked = await sendButtonInfo(toggleSwitch.checked);
+        saveButtonStatus(toggleSwitch.checked);
     });
 });
 

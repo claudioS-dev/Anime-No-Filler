@@ -71,11 +71,15 @@ function skipEpisode(currentEpisode, siteElementsID, site) {
     }
 }
 
-async function getButtonStatus(){
-    return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ action: 'getButtonStatus',}, (response) => {
-            resolve(response);
-        });
+function getButtonStatus() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get('skipButtonState', function(result) {
+        const buttonState = result.skipButtonState;
+        if (buttonState === undefined) {
+            reject(new Error('No se pudo obtener el estado del botón.'));
+        }
+        resolve(buttonState);
+      });
     });
 }
 
