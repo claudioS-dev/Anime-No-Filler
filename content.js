@@ -50,7 +50,7 @@ function getNextEpisodeID(siteElementsID, site) {
     return siteElementsID[site]?.nextEpisodeID || null;
 }
 
-async function skipEpisode(currentEpisode, siteElementsID, site) {
+function skipEpisode(currentEpisode, siteElementsID, site) {
     const nextEpisodeID = getNextEpisodeID(siteElementsID, site);
     const nextButton = document.querySelector(nextEpisodeID);
     if (site != "www.crunchyroll.com") {
@@ -123,7 +123,7 @@ async function main(siteElementsID) {
     const buttonStatus = await getButtonStatus();
     if (buttonStatus === true && episodeInfo.category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
-        await skipEpisode(animeEpisode, siteElementsID, site);
+        skipEpisode(animeEpisode, siteElementsID, site);
     }
 
 }
