@@ -8,11 +8,11 @@
   Each episode on Crunchyroll will be marked with a visual indicator aside on the title, making it simple to identify canon and filler episodes at a glance.
   AnimeNoFiller seamlessly integrates with Crunchyroll, ensuring a smooth and uninterrupted streaming experience.
 
-### How It Works
+### How It Works⚒️
 
   AnimeNoFiller analyzes the content of each episode based on community feedback, expert reviews, and official sources to determine its classification as canon or filler. The extension then displays this information directly on the episode page of Crunchyroll, allowing you to make informed decisions about which episodes to watch.
 
-### Installation
+### Installation💿
 
   Visit the Chrome Web Store and search for "AnimeNoFiller" or use the provided link.
   Click on the "Add to Chrome" button to install the extension.

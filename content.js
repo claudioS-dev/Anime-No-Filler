@@ -28,18 +28,26 @@ function titleIncludeInformation(titleText) {
 
 function setTitle(titleElement, category, color) {
     
-    if (titleIncludeInformation(titleElement.textContent) ){ 
+    if (document.querySelector('[name="spanEtiqueta"]')) { 
         return;
     }
-
     const spanElement = document.createElement("span");
     const categoryFormatted = category.replace("_", " ");
-
-    spanElement.innerText = " "+categoryFormatted;
-    titleElement.appendChild(spanElement);
-    spanElement.style.color = color;
-
+    spanElement.innerText = " " + categoryFormatted;
+    spanElement.style.backgroundColor = color;
+    spanElement.style.padding = '6px';
+    spanElement.style.marginBottom = '20px';
+    spanElement.style.borderRadius = '6px';
+    spanElement.style.textAlign = 'center';
+    spanElement.style.color = 'white';
+    spanElement.style.fontFamily = 'Arial';
+    spanElement.style.fontSize = '12px';
+    spanElement.style.display = 'inline-block';
+    spanElement.setAttribute("name", "spanEtiqueta");
+    titleElement.parentNode.insertBefore(spanElement, titleElement);
 }
+
+
 
 function getEpisodeNumber(title) {
     const match = title.match(/\d+/);
