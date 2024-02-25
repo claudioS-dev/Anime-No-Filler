@@ -133,7 +133,7 @@ async function main(siteElementsID) {
     }
      
     const buttonStatus = await getButtonStatus();
-    if (buttonStatus === true && episodeInfo.category === "FILLER") {
+    if (buttonStatus === true && category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
         skipEpisode(animeEpisode, siteElementsID, site);
     }
