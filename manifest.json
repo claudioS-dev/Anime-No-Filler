@@ -17,12 +17,12 @@
     "background": {
         "service_worker": "background.js",
         "type": "module",
-        "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*"]
+        "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*"]
     },
     "content_scripts": [
         {
             "js": ["content.js"],
-            "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*"]
+            "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*"]
         }
     ],
     "web_accessible_resources": [
