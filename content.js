@@ -28,7 +28,7 @@ function titleIncludeInformation(titleText) {
 
 function setTitle(titleElement, category, color) {
     
-    if (document.querySelector('[name="spanEtiqueta"]')) { 
+    if (document.querySelector('[name="spanTAG"]')) { 
         return;
     }
     const spanElement = document.createElement("span");
@@ -43,7 +43,7 @@ function setTitle(titleElement, category, color) {
     spanElement.style.fontFamily = 'Arial';
     spanElement.style.fontSize = '12px';
     spanElement.style.display = 'inline-block';
-    spanElement.setAttribute("name", "spanEtiqueta");
+    spanElement.setAttribute("name", "spanTAG");
     titleElement.parentNode.insertBefore(spanElement, titleElement);
 }
 
@@ -113,13 +113,24 @@ function getNameAndEpisode(titleComponent, subTitleComponent, site){
     return {animeEpisode, animeName}
 }
 
+function removeSpanTAG(){
+    const spanTAG = document.querySelector('[name="spanTAG"]');
+    if (spanTAG) {spanTAG.remove();}
+}
+
+function skipMinute(time){
+    let player = document.getElementById('player0')
+    player.currentTime = time
+}
+
 async function main(siteElementsID) {
     const site = window.location.hostname;
-    console.log("asd",site)
+
     const titleID = getTitleID(siteElementsID, site);
     const subTitleID = getSubTitleID(siteElementsID, site);
-
+    
     const titleComponent = await getElementInDOM(titleID);
+    titleComponent.addEventListener('DOMSubtreeModified', removeSpanTAG);
     const subTitleComponent = await getElementInDOM(subTitleID);
     
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
@@ -131,12 +142,25 @@ async function main(siteElementsID) {
     if (category && color){
         setTitle(titleComponent, category, color);
     }
-     
+
     const buttonStatus = await getButtonStatus();
-    if (buttonStatus === true && category === "FILLER") {
+    
+    if (!buttonStatus){
+        return;
+    }
+
+    if (category === "FILLER") {
         intervalId = setInterval(skipEpisode, 2000);
         skipEpisode(animeEpisode, siteElementsID, site);
     }
+
+    /* const startAnime = 800;
+    const reproductor = await getElementInDOM('#vilosRoot');
+    const currentMinute = reproductor.currentTime;
+    console.log("test", currentMinute)
+    if (currentMinute < startAnime){
+        skipMinute(startAnime)
+    } */
 
 }
 
