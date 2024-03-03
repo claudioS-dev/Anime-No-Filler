@@ -16,10 +16,57 @@ function setCacheData(dataName, dataSave) {
     chrome.storage.local.set(dataToSave);
 }
 
-function modifyInfoPopup(imagePopUp){
+async function modifyInfoPopup(){
+    const animeName = await getStoredState("animeName")
+    const animeEpisode = await getStoredState("animeEpisode")
+    const headerElement = document.querySelector('.header');
+
+    console.log(animeName)
+    switch (animeName) {
+        case "one piece": 
+            headerElement.style.background = 'url("../images/fp/op.png")';
+            headerElement.style.backgroundSize = 'cover';
+            headerElement.style.backgroundRepeat = 'no-repeat';
+            headerElement.style.backgroundPosition = 'center';
+            headerElement.cap = "one piece"
+            break;
+        case "naruto":
+            headerElement.style.background = 'url("../images/fp/naruto.png")';
+            headerElement.style.backgroundSize = 'cover';
+            headerElement.style.backgroundRepeat = 'no-repeat';
+            headerElement.style.backgroundPosition = 'center';
+            headerElement.cap = "Naruto"
+            break;
+        case "black clover":
+            headerElement.style.background = 'url("../images/fp/BC.jpeg")';
+            headerElement.style.backgroundSize = 'cover';
+            headerElement.style.backgroundRepeat = 'no-repeat';
+            headerElement.style.backgroundPosition = 'center';
+            break;
+        case "bleach":
+            headerElement.style.background = 'url("../images/fp/bleach.png")';
+            headerElement.style.backgroundSize = 'cover';
+            headerElement.style.backgroundRepeat = 'no-repeat';
+            headerElement.style.backgroundPosition = 'center';
+            break;
+        case "naruto shippuden":
+            headerElement.style.background = 'url("../images/fp/narutosh.png")';
+            headerElement.style.backgroundSize = 'cover';
+            headerElement.style.backgroundRepeat = 'no-repeat';
+            headerElement.style.backgroundPosition = 'center';
+            break;
+        case "boruto: naruto next generations":
+            headerElement.style.background = 'url("../images/fp/boruto.jpe")';
+            headerElement.style.backgroundSize = 'cover';
+            headerElement.style.backgroundRepeat = 'no-repeat';
+            headerElement.style.backgroundPosition = 'center';
+            break;
+
+    }
     
 }
 
+modifyInfoPopup()
 var toggleSwitch = document.getElementById('ToggleSwitch');
 document.addEventListener('DOMContentLoaded', async function() {
     const buttonStatus = await getStoredState("skipButtonState");
