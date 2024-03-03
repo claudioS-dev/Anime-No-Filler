@@ -4,7 +4,7 @@
     "version": "1.0",
     "description": "With AnimeNoFiller, you'll never have to wonder again whether an episode is canon or filler.",
     "icons": {
-        "128": "./images/Icons/logo3.png"
+        "128": "./images/Icons/logo1.png"
     },
     "action": {
         "default_popup": "popup/popup.html"

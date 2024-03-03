@@ -3,7 +3,7 @@ function getStoredState(keyName) {
         chrome.storage.local.get(keyName, function(result) {
             const storedState = result[keyName];
             if (!storedState) {
-                reject(new Error(`Failed to retrieve the state for key: ${keyName}.`));
+                resolve(null);
             }
             resolve(storedState);
         });
@@ -20,35 +20,47 @@ async function modifyInfoPopup(){
     const animeName = await getStoredState("animeName")
     const animeEpisode = await getStoredState("animeEpisode")
     const headerElement = document.querySelector('.header');
+    const titleAnime = document.getElementsByClassName('cap')[0];
 
     const changeBackgroundImage = (animeName, imageName) => {
         headerElement.style.background = `url("../images/fp/${imageName}")`;
         headerElement.style.backgroundSize = 'cover';
         headerElement.style.backgroundRepeat = 'no-repeat';
         headerElement.style.backgroundPosition = 'center';
-        titleAnime[0].innerText = `${animeName} ${animeEpisode}`;
+        titleAnime.innerText = `${animeName}`;
+        if (animeName !== "Portada"){
+            titleAnime.innerText = titleAnime.innerText + ` ${animeEpisode}`
+        }
+        console.log(titleAnime.innerText.length)
+        if (titleAnime.innerText.length > 18){
+            console.log("estoy pasando")
+            titleAnime.style.top = '160px';
+        }
+
     }
 
     console.log(animeName)
     switch (animeName) {
         case "one piece": 
-            changeBackgroundImage("One Piece", "op.png");
+            changeBackgroundImage("One Piece", "op.webp");
             break;
         case "naruto":
-            changeBackgroundImage("Naruto", "naruto.png");
+            changeBackgroundImage("Naruto", "naruto.webp");
             break;
         case "black clover":
-            changeBackgroundImage("Black Clover", "BC.jpeg");
+            changeBackgroundImage("Black Clover", "BC.jwebp");
             break;
         case "bleach":
-            changeBackgroundImage("Bleach", "bleach.png");
+            changeBackgroundImage("Bleach", "bleach.webp");
             break;
         case "naruto shippuden":
-            changeBackgroundImage("Naruto shippuden", "narutosh.png");
+            changeBackgroundImage("Naruto shippuden", "narutosh.webp");
             break;
         case "boruto: naruto next generations":
-            changeBackgroundImage("Boruto: Naruto Next Generations", "boruto.jpe");
+            changeBackgroundImage("Boruto: Naruto Next Generations", "boruto.webp");
             break;
+        default:
+            changeBackgroundImage("Portada", "Portada.webp");
 
     }
     
