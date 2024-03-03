@@ -21,45 +21,33 @@ async function modifyInfoPopup(){
     const animeEpisode = await getStoredState("animeEpisode")
     const headerElement = document.querySelector('.header');
 
+    const changeBackgroundImage = (animeName, imageName) => {
+        headerElement.style.background = `url("../images/fp/${imageName}")`;
+        headerElement.style.backgroundSize = 'cover';
+        headerElement.style.backgroundRepeat = 'no-repeat';
+        headerElement.style.backgroundPosition = 'center';
+        titleAnime[0].innerText = `${animeName} ${animeEpisode}`;
+    }
+
     console.log(animeName)
     switch (animeName) {
         case "one piece": 
-            headerElement.style.background = 'url("../images/fp/op.png")';
-            headerElement.style.backgroundSize = 'cover';
-            headerElement.style.backgroundRepeat = 'no-repeat';
-            headerElement.style.backgroundPosition = 'center';
-            headerElement.cap = "one piece"
+            changeBackgroundImage("One Piece", "op.png");
             break;
         case "naruto":
-            headerElement.style.background = 'url("../images/fp/naruto.png")';
-            headerElement.style.backgroundSize = 'cover';
-            headerElement.style.backgroundRepeat = 'no-repeat';
-            headerElement.style.backgroundPosition = 'center';
-            headerElement.cap = "Naruto"
+            changeBackgroundImage("Naruto", "naruto.png");
             break;
         case "black clover":
-            headerElement.style.background = 'url("../images/fp/BC.jpeg")';
-            headerElement.style.backgroundSize = 'cover';
-            headerElement.style.backgroundRepeat = 'no-repeat';
-            headerElement.style.backgroundPosition = 'center';
+            changeBackgroundImage("Black Clover", "BC.jpeg");
             break;
         case "bleach":
-            headerElement.style.background = 'url("../images/fp/bleach.png")';
-            headerElement.style.backgroundSize = 'cover';
-            headerElement.style.backgroundRepeat = 'no-repeat';
-            headerElement.style.backgroundPosition = 'center';
+            changeBackgroundImage("Bleach", "bleach.png");
             break;
         case "naruto shippuden":
-            headerElement.style.background = 'url("../images/fp/narutosh.png")';
-            headerElement.style.backgroundSize = 'cover';
-            headerElement.style.backgroundRepeat = 'no-repeat';
-            headerElement.style.backgroundPosition = 'center';
+            changeBackgroundImage("Naruto shippuden", "narutosh.png");
             break;
         case "boruto: naruto next generations":
-            headerElement.style.background = 'url("../images/fp/boruto.jpe")';
-            headerElement.style.backgroundSize = 'cover';
-            headerElement.style.backgroundRepeat = 'no-repeat';
-            headerElement.style.backgroundPosition = 'center';
+            changeBackgroundImage("Boruto: Naruto Next Generations", "boruto.jpe");
             break;
 
     }
