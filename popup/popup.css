@@ -21,7 +21,7 @@ body{
   Width: 428px;
   Height: 329px;
   background: url("../images/fp/op.png");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 95%;

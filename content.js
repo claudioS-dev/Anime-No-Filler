@@ -141,7 +141,6 @@ async function main(siteElementsID) {
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
     setCacheData("animeName", animeName)
     setCacheData("animeEpisode",animeEpisode)
-    setAnimeCache(animeName,)
     //const startTime = performance.now();
     const {category, color} = await getAnimeInfo(animeEpisode, animeName);
     //const endTime = performance.now();
