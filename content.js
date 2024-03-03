@@ -123,6 +123,11 @@ function skipMinute(time){
     player.currentTime = time
 }
 
+function setCacheData(dataName, dataSave) {
+    const dataToSave = { [dataName]: dataSave };
+    chrome.storage.local.set(dataToSave);
+}
+
 async function main(siteElementsID) {
     const site = window.location.hostname;
 
@@ -134,7 +139,9 @@ async function main(siteElementsID) {
     const subTitleComponent = await getElementInDOM(subTitleID);
     
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
-    
+    setCacheData("animeName", animeName)
+    setCacheData("animeEpisode",animeEpisode)
+    setAnimeCache(animeName,)
     //const startTime = performance.now();
     const {category, color} = await getAnimeInfo(animeEpisode, animeName);
     //const endTime = performance.now();
@@ -161,6 +168,7 @@ async function main(siteElementsID) {
     if (currentMinute < startAnime){
         skipMinute(startAnime)
     } */
+
 
 }
 

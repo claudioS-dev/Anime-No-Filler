@@ -1,27 +1,33 @@
-function getButtonStatus() {
+function getStoredState(keyName) {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.get('skipButtonState', function(result) {
-        const buttonState = result.skipButtonState;
-        if (buttonState === undefined) {
-            reject(new Error('No se pudo obtener el estado del botón.'));
-        }
-        resolve(buttonState);
-      });
+        chrome.storage.local.get(keyName, function(result) {
+            const storedState = result[keyName];
+            if (storedState === undefined) {
+                reject(new Error(`Failed to retrieve the state for key: ${keyName}.`));
+            }
+            resolve(storedState);
+        });
     });
 }
 
-function saveButtonStatus(buttonState) {
-    chrome.storage.local.set({ 'skipButtonState': buttonState });
+
+function setCacheData(dataName, dataSave) {
+    const dataToSave = { [dataName]: dataSave };
+    chrome.storage.local.set(dataToSave);
+}
+
+function modifyInfoPopup(imagePopUp){
+    
 }
 
 var toggleSwitch = document.getElementById('ToggleSwitch');
 document.addEventListener('DOMContentLoaded', async function() {
-    const buttonStatus = await getButtonStatus();
+    const buttonStatus = await getStoredState("skipButtonState");
     toggleSwitch.checked = buttonStatus;
 });
 document.addEventListener('DOMContentLoaded', function() {
     toggleSwitch.addEventListener('change', async function() {
-        saveButtonStatus(toggleSwitch.checked);
+        setCacheData("skipButtonState",toggleSwitch.checked);
     });
 });
 
