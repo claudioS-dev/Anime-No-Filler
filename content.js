@@ -71,15 +71,15 @@ function skipEpisode(currentEpisode, siteElementsID, site) {
     }
 }
 
-function getButtonStatus() {
+function getStoredState(keyName) {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.get('skipButtonState', function(result) {
-        const buttonState = result.skipButtonState;
-        if (!buttonState) {
-            reject(new Error('No se pudo obtener el estado del botón.'));
-        }
-        resolve(buttonState);
-      });
+        chrome.storage.local.get(keyName, function(result) {
+            const storedState = result[keyName];
+            if (!storedState) {
+                reject(new Error(`Failed to retrieve the state for key: ${keyName}.`));
+            }
+            resolve(storedState);
+        });
     });
 }
 
@@ -141,7 +141,8 @@ async function main(siteElementsID) {
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
     setCacheData("animeName", animeName)
     setCacheData("animeEpisode",animeEpisode)
-    setAnimeCache(animeName,)
+
+
     //const startTime = performance.now();
     const {category, color} = await getAnimeInfo(animeEpisode, animeName);
     //const endTime = performance.now();
@@ -150,7 +151,7 @@ async function main(siteElementsID) {
         setTitle(titleComponent, category, color);
     }
 
-    const buttonStatus = await getButtonStatus();
+    const buttonStatus = await getButtonStatus('skipButtonState');
     
     if (!buttonStatus){
         return;

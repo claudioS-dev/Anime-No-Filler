@@ -2,7 +2,7 @@ function getStoredState(keyName) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(keyName, function(result) {
             const storedState = result[keyName];
-            if (storedState === undefined) {
+            if (!storedState) {
                 reject(new Error(`Failed to retrieve the state for key: ${keyName}.`));
             }
             resolve(storedState);
