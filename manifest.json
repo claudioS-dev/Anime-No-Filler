@@ -4,10 +4,10 @@
     "version": "1.0",
     "description": "With AnimeNoFiller, you'll never have to wonder again whether an episode is canon or filler.",
     "icons": {
-        "128": "./img/Icons/logo3.png"
+        "128": "./images/Icons/logo3.png"
     },
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup/popup.html"
     },
     "permissions": [
         "activeTab", 
@@ -15,7 +15,7 @@
         "storage"
     ],
     "background": {
-        "service_worker": "background.js",
+        "service_worker": "background/service-worker.js",
         "type": "module",
         "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*"]
     },
@@ -27,7 +27,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["infoAnimes.json", "animeDataFunctions.js"],
+            "resources": ["infoAnimes.json", "background/animeDataFunctions.js"],
             "matches": ["<all_urls>"]
         }
     ]

@@ -20,7 +20,7 @@ body{
   position: absolute;
   Width: 428px;
   Height: 329px;
-  background: url("./img/fp/op.png");
+  background: url("../images/fp/op.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -223,7 +223,7 @@ color: #ffffff;
   color: white;
   text-decoration: none;
   border: none;
-  background-image: url("./img/Icons/arrow\ left.svg");
+  background-image: url("../images/Icons/arrow\ left.svg");
   background-position: center right;
   background-repeat: no-repeat;
 }
