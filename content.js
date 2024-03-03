@@ -75,7 +75,7 @@ function getButtonStatus() {
     return new Promise((resolve, reject) => {
       chrome.storage.local.get('skipButtonState', function(result) {
         const buttonState = result.skipButtonState;
-        if (buttonState === undefined) {
+        if (!buttonState) {
             reject(new Error('No se pudo obtener el estado del botón.'));
         }
         resolve(buttonState);

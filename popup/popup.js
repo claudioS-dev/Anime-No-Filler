@@ -2,7 +2,7 @@ function getButtonStatus() {
     return new Promise((resolve, reject) => {
       chrome.storage.local.get('skipButtonState', function(result) {
         const buttonState = result.skipButtonState;
-        if (buttonState === undefined) {
+        if (!buttonState) {
             reject(new Error('No se pudo obtener el estado del botón.'));
         }
         resolve(buttonState);
@@ -14,7 +14,7 @@ function saveButtonStatus(buttonState) {
     chrome.storage.local.set({ 'skipButtonState': buttonState });
 }
 
-var toggleSwitch = document.getElementById('ToggleSwitch');
+const toggleSwitch = document.getElementById('ToggleSwitch');
 document.addEventListener('DOMContentLoaded', async function() {
     const buttonStatus = await getButtonStatus();
     toggleSwitch.checked = buttonStatus;
