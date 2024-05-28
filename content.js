@@ -162,13 +162,13 @@ async function main(siteElementsID) {
         skipEpisode(animeEpisode, siteElementsID, site);
     }
 
-    /* const startAnime = 800;
-    const reproductor = await getElementInDOM('#vilosRoot');
+    const startAnime = 800;
+    const reproductor = await getElementInDOM('#player0');
     const currentMinute = reproductor.currentTime;
     console.log("test", currentMinute)
     if (currentMinute < startAnime){
         skipMinute(startAnime)
-    } */
+    }
 
 
 }
