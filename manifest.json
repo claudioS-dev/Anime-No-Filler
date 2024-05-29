@@ -10,7 +10,9 @@
         "default_popup": "popup/popup.html"
     },
     "permissions": [
-        
+        "activeTab", 
+        "scripting", 
+        "storage"
     ],
     "background": {
         "service_worker": "background/service-worker.js",
