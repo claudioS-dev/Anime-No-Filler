@@ -1,3 +1,7 @@
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function getAnimeInfo(episode, animeName) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage({ action: 'processInfo', episode, animeName }, (response) => {
@@ -151,24 +155,25 @@ async function main(siteElementsID) {
         setTitle(titleComponent, category, color);
     }
 
-    const buttonStatus = await getButtonStatus('skipButtonState');
+    const buttonStatus = await getStoredState('skipButtonState');
     
     if (!buttonStatus){
         return;
     }
-
     if (category === "FILLER") {
-        intervalId = setInterval(skipEpisode, 2000);
+        //intervalId = setInterval(skipEpisode, 2000);
+        await delay(3000)
         skipEpisode(animeEpisode, siteElementsID, site);
     }
+    
 
-    const startAnime = 800;
-    const reproductor = await getElementInDOM('#player0');
+    /* const startAnime = 800;
+    const reproductor = await getElementInDOM('#vilosRoot');
     const currentMinute = reproductor.currentTime;
     console.log("test", currentMinute)
     if (currentMinute < startAnime){
         skipMinute(startAnime)
-    }
+    } */
 
 
 }
