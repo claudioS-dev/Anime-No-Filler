@@ -1,7 +1,3 @@
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function getAnimeInfo(episode, animeName) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage({ action: 'processInfo', episode, animeName }, (response) => {
@@ -73,6 +69,7 @@ function skipEpisode(currentEpisode, siteElementsID, site) {
     if (episodeNumberButton > currentEpisode) {
         nextButton.click();
     }
+
 }
 
 function getStoredState(keyName) {
@@ -148,7 +145,10 @@ async function main(siteElementsID) {
 
 
     //const startTime = performance.now();
+    const {category:nextCategory} = await getAnimeInfo(animeEpisode+1, animeName)
     const {category, color} = await getAnimeInfo(animeEpisode, animeName);
+    //const {preCategory, preColor } = await getAnimeInfo(animeEpisode-1, animeName)
+
     //const endTime = performance.now();
     //console.log("Time to get anime info:", endTime - startTime);
     if (category && color){
@@ -160,20 +160,31 @@ async function main(siteElementsID) {
     if (!buttonStatus){
         return;
     }
-    if (category === "FILLER") {
-        //intervalId = setInterval(skipEpisode, 2000);
-        await delay(3000)
-        skipEpisode(animeEpisode, siteElementsID, site);
+
+    if (category != "FILLER"){
+        return;
     }
+
+    //intervalId = setInterval(skipEpisode, 2000);
+    skipEpisode(animeEpisode, siteElementsID, site);
+    if (nextCategory != "FILLER"){
+        window.location.reload();
+        console.log("reload")   
+    }   
+    
+
+    
+    console.log("preCategory", preCategory)
+    console.log(typeof animeEpisode)
     
 
     /* const startAnime = 800;
-    const reproductor = await getElementInDOM('#vilosRoot');
+    const reproductor = await getElementInDOM('#player0');
     const currentMinute = reproductor.currentTime;
     console.log("test", currentMinute)
     if (currentMinute < startAnime){
         skipMinute(startAnime)
-    } */
+     }*/
 
 
 }
