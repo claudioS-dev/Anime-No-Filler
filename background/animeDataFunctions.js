@@ -1,3 +1,30 @@
+const CATEGORIES = {
+    "es":{
+        ANIME_CANON: 'Anime Canon',
+        CANON: 'Canon',
+        FILLER: 'Relleno',
+        MIXED: 'Mixto'
+    },
+    "en":{
+        ANIME_CANON: 'Anime Canon',
+        CANON: 'Canon',
+        FILLER: 'Filler',
+        MIXED: 'Mixed'
+    },
+    "pt":{
+        ANIME_CANON: 'Anime Canon',
+        CANON: 'Canon',
+        FILLER: 'Filler',
+        MIXED: 'Misto'
+    },
+    "fr":{
+        ANIME_CANON: 'Anime Canon',
+        CANON: 'Canon',
+        FILLER: 'Remplissage',
+        MIXED: 'Mixte'
+    }
+}
+
 export function fetchData() {
     return new Promise(async (resolve, reject) => {
         try {
@@ -22,21 +49,29 @@ export function getAnimeObjectByName(animeName, animeObjectsArray) {
 }
 
 export function getEpisodeInfo(anime, episode, userColors = {}) {
-    const category = determineCategory(anime, episode);
-    const color = getColorForCategory(category, userColors);
+    //languaje use API
+    const lang = chrome.i18n.getUILanguage().split('-')[0];
+    const validLanguage = CATEGORIES[lang] ? lang : 'en';
+
+    const category = determineCategory(anime, episode,validLanguage);
+    const color = getColorForCategory(category.idCategory, userColors);
     return { category, color };
 }
 
-function determineCategory(anime, episode) {
+function determineCategory(anime, episode,validLanguage) {
     switch (true) {
         case anime.canonAnimeEpisodes.includes(episode):
-            return 'ANIME_CANON';
+            return {idCategory:"ANIME_CANON",
+                    category:CATEGORIES[validLanguage].ANIME_CANON};
         case anime.canonEpisodes.includes(episode):
-            return 'CANON';
+            return {idCategory:"CANON",
+                    category:CATEGORIES[validLanguage].CANON};
         case anime.fillerEpisodes.includes(episode):
-            return 'FILLER';
+            return {idCategory:"FILLER",
+                    category:CATEGORIES[validLanguage].FILLER}
         case anime.mixedEpisodes.includes(episode):
-            return 'MIXED';
+            return {idCategory:"MIXED",
+                    category:CATEGORIES[validLanguage].MIXED}
         default:
             return;
     }

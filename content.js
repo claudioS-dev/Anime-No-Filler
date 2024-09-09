@@ -107,10 +107,15 @@ function getNameAndEpisode(titleComponent, subTitleComponent, site){
             animeEpisode = titleComponent.querySelector('#cm-episode-number').textContent;
             animeName = subTitleComponent.textContent;
             break;
+        case "animevision.masterstreet.cl":
+            animeName = titleComponent.textContent.split("-")[0].trim();
+            animeEpisode = subTitleComponent.textContent.match(/(\d+)/)[1];
+            break;
         default:
             return;
     }
     animeName = animeName.toLowerCase();
+    animeEpisode = parseInt(animeEpisode);
     return {animeEpisode, animeName}
 }
 
@@ -152,7 +157,7 @@ async function main(siteElementsID) {
     //const endTime = performance.now();
     //console.log("Time to get anime info:", endTime - startTime);
     if (category && color){
-        setTitle(titleComponent, category, color);
+        setTitle(titleComponent, category.category, color);
     }
 
     const buttonStatus = await getStoredState('skipButtonState');
@@ -161,13 +166,13 @@ async function main(siteElementsID) {
         return;
     }
 
-    if (category != "FILLER"){
+    if (category.idCategory != "FILLER"){
         return;
     }
 
     //intervalId = setInterval(skipEpisode, 2000);
     skipEpisode(animeEpisode, siteElementsID, site);
-    if (nextCategory != "FILLER"){
+    if (nextCategory.idCategory != "FILLER"){
         window.location.reload();
         console.log("reload")   
     }   
@@ -194,7 +199,8 @@ async function init() {
         const siteElementsID = {
             "www.crunchyroll.com": { titleID: "h1", subTitleID: "h4.text--gq6o-", nextEpisodeID: "a.playable-card-mini-static__link--UOJQm" },
             "www3.animeflv.net": { titleID: "h1.Title", subTitleID: "h2.SubTitle", nextEpisodeID: "a.CapNvNx.fa-chevron-right" },
-            "9animetv.to": { titleID: 'a.btn.btn-sm.btn-comment-tab[data-type="episode"]', subTitleID: "h2.film-name", nextEpisodeID: "a.btn.btn-sm.btn-next" }    
+            "9animetv.to": { titleID: 'a.btn.btn-sm.btn-comment-tab[data-type="episode"]', subTitleID: "h2.film-name", nextEpisodeID: "a.btn.btn-sm.btn-next" },
+            "animevision.masterstreet.cl": {titleID: "h1.lang-name", subTitleID: "h4.episodes-display", nextEpisodeID: "button.next-button"},
         };
         intervalId = setInterval(() => main(siteElementsID), 1000);
     } catch (error) {

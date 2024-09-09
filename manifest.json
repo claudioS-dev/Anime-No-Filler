@@ -12,17 +12,18 @@
     "permissions": [
         "activeTab", 
         "scripting", 
-        "storage"
+        "storage",
+        "i18n"
     ],
     "background": {
         "service_worker": "background/service-worker.js",
         "type": "module",
-        "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*"]
+        "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*", "*://animevision.masterstreet.cl/*", "*://localhost/*"]
     },
     "content_scripts": [
         {
             "js": ["content.js"],
-            "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*"]
+            "matches": ["*://*.crunchyroll.com/*", "*://*.animeflv.net/*", "*://*.9animetv.to/*", "*://animevision.masterstreet.cl/*", "*://localhost/*"]
         }
     ],
     "web_accessible_resources": [
