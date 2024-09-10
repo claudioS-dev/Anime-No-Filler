@@ -145,17 +145,19 @@ async function main(siteElementsID) {
     const subTitleComponent = await getElementInDOM(subTitleID);
     
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
-    setCacheData("animeName", animeName)
-    setCacheData("animeEpisode",animeEpisode)
 
 
     //const startTime = performance.now();
     const {category:nextCategory} = await getAnimeInfo(animeEpisode+1, animeName)
-    const {category, color} = await getAnimeInfo(animeEpisode, animeName);
+    const {category, color, imgURL} = await getAnimeInfo(animeEpisode, animeName);
     //const {preCategory, preColor } = await getAnimeInfo(animeEpisode-1, animeName)
 
     //const endTime = performance.now();
     //console.log("Time to get anime info:", endTime - startTime);
+    setCacheData("animeName", animeName)
+    setCacheData("animeEpisode",animeEpisode)
+    setCacheData("animeImgURL", imgURL)
+
     if (category && color){
         setTitle(titleComponent, category.category, color);
     }

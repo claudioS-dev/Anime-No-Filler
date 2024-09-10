@@ -27,7 +27,8 @@ async function processInfo({ animeName, episode }, sendResponse) {
     try {
         const animeObject = getAnimeObjectByName(animeName, animeObjectsArray);
         const episodeInfo = getEpisodeInfo(animeObject, episode);
-        sendResponse(episodeInfo);
+        const infoResponse = { ...episodeInfo, animeName,imgURL:animeObject.img };
+        sendResponse(infoResponse);
     } catch (error) {
         console.error('Error al procesar la información:', error);
     }
