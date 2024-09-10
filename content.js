@@ -73,11 +73,11 @@ function skipEpisode(currentEpisode, siteElementsID, site) {
 }
 
 function getStoredState(keyName) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         chrome.storage.local.get(keyName, function(result) {
             const storedState = result[keyName];
             if (!storedState) {
-                reject(new Error(`Failed to retrieve the state for key: ${keyName}.`));
+                resolve(null)
             }
             resolve(storedState);
         });
