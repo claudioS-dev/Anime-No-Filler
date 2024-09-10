@@ -7,6 +7,7 @@
 
 body{
   overflow-y: hidden;
+  user-select: none;
 }
 
 .layout  {
@@ -21,19 +22,33 @@ body{
   Width: 428px;
   Height: 329px;
   opacity: 95%;
-  box-shadow: 0px 4px 100px 100px #00000040 inset;
+  box-shadow: inset 0px 4px 100px 100px rgba(0, 0, 0, 0.40);
+
 }
 
-.coffee{
+.donate-icon{
   position: absolute;
   width: 100.51px;
   height: 30px;
   top: 4px;
   right: 5px;
-  background: #181A20;
+  /*background: #181A20;*/
+  border-radius: 30px;
+
+  /* ELIMINAR DESPUES */
+  pointer-events: none;
+  font-family: Poppins;
+  font-size: 15px;  
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ffffff;
+  text-align: center;
+  padding-bottom: 20px;
 }
 
-.cap {
+.anime-title {
 position: absolute;
 width: 428px;
 height: 48px;
@@ -48,9 +63,12 @@ line-height: 48px;
 letter-spacing: 0em;
 text-align: left;
 color: #ffffff;
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+-webkit-text-stroke: 0.2px black;
+
 }
 
-.skip {
+.skip-fill {
   position: absolute;
   width: 142px;
   height: 30px;
@@ -66,6 +84,8 @@ color: #ffffff;
   letter-spacing: 0em;
   text-align: left;
   color: #ffffff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+-webkit-text-stroke: 0.2px black;
 }
 
 .toggle {
@@ -108,6 +128,7 @@ color: #ffffff;
   height: 134px;
   top: 357px;
   left: 54px;
+  opacity: 0.2;
   }
 
 .rate-container p {
@@ -124,7 +145,7 @@ color: #ffffff;
   text-align: center;
 }
 
-.rate-container .aa{
+.rate-container .rate-buttons{
   position: relative;
   width: 190px;
   height: 72px;
@@ -135,14 +156,14 @@ color: #ffffff;
   align-items: center;
 
 }
-.dislike {
+.dislike-icon {
   position: relative;
   width: 60px;
   height: 60px;
   transform: rotate(7.41deg);
   /* rotate: 7.41; */
 }
-.like {
+.like-icon {
   position: relative;
   width: 60px;
   height: 60px;
@@ -152,7 +173,7 @@ color: #ffffff;
   /* rotate: -6.18a; */
 }
 
-.minute {
+.filler-contribution-time {
   position: absolute;
   width: 396px;
   height: 189px;
@@ -162,10 +183,30 @@ color: #ffffff;
   gap: 16px;
   background: #0D1015;
   box-shadow: 0px 4px 10px 0px #37383C29;
-  /* box-shadow: 0px 0px 2px 0px #37383C7A; */
+  /* ELIMINAR DEPUES */
+  opacity: 0.2;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.minute p {
+  /* ELIMINAR DEPUES */
+.coming-soon {
+  position: absolute;
+  top: 590px; /* Ajusta según sea necesario */
+  left: 20px; /* Ajusta según sea necesario */
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+  padding: 10px;
+  border-radius: 8px;
+  transform: rotate(-20deg); /* Rota el texto en diagonal */
+  z-index: 2; /* Asegúrate de que esté por encima del otro contenido */
+}
+
+
+
+.filler-contribution-time p {
   position: absolute;
   width: 236px;
   height: 16px;
@@ -180,7 +221,7 @@ color: #ffffff;
   color: #FFFFFF40;
 }
 
-.minute p2 {
+.filler-contribution-time p2 {
   position: absolute;
   width: 332px;
   height: 56px;
@@ -224,7 +265,7 @@ color: #ffffff;
   background-repeat: no-repeat;
 }
 
-.footer{
+.anime-list-container{
   position: absolute;
   width: 400px;
   top: 756px;
@@ -264,14 +305,14 @@ color: #ffffff;
   text-decoration: none;
 }
 
-.wrapper .karrusel{
+.wrapper .carousel{
   white-space: nowrap;
   font-size: 0px;
   cursor: pointer;
   overflow: hidden;
 }
 
-.karrusel img{
+.carousel img{
   height:189px;
   width: 131px;
   object-fit: cover;
@@ -280,7 +321,7 @@ color: #ffffff;
   border-radius: 8%;
 }
 
-.karrusel img:first-child{
+.carousel img:first-child{
   margin-left: 0px;
 
 }

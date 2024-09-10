@@ -20,7 +20,7 @@ async function modifyInfoPopup(){
     const animeName = await getStoredState("animeName")
     const animeEpisode = await getStoredState("animeEpisode")
     const headerElement = document.querySelector('.header');
-    const titleAnime = document.getElementsByClassName('cap')[0];
+    const titleAnime = document.getElementsByClassName('anime-title')[0];
 
     const changeBackgroundImage = (animeName, imageName) => {
         headerElement.style.background = `url("../images/fp/${imageName}")`;
@@ -78,21 +78,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-const karrusel = document.querySelector(".karrusel");
+const carousel = document.querySelector(".carousel");
 
 let isDragStart = false, prevPageX, prevScrollLeft;
 
 const dragStart = (e) => {
     isDragStart = true;
     prevPageX = e.pageX;
-    prevScrollLeft = karrusel.scrollLeft;
+    prevScrollLeft = carousel.scrollLeft;
 }
 
 const dragging = (e) => {
     if(!isDragStart) return;
     e.preventDefault();
     let positionDiff = e.pageX - prevPageX;
-    karrusel.scrollLeft = prevScrollLeft - positionDiff;
+    carousel.scrollLeft = prevScrollLeft - positionDiff;
     console.log(e.pageX);
 }
 
@@ -100,10 +100,10 @@ const dragStop = () =>{
     isDragStart = false;
 }
 
-karrusel.addEventListener("mousedown", dragStart);
-karrusel.addEventListener("mousemove", dragging);
-karrusel.addEventListener("mouseup", dragStop);
-karrusel.addEventListener("mouseleave", dragStop);
+carousel.addEventListener("mousedown", dragStart);
+carousel.addEventListener("mousemove", dragging);
+carousel.addEventListener("mouseup", dragStop);
+carousel.addEventListener("mouseleave", dragStop);
 
 function removeScrollbar(){
     const styleElement = document.createElement('style');
