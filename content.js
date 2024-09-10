@@ -141,11 +141,14 @@ async function main(siteElementsID) {
     const subTitleID = getSubTitleID(siteElementsID, site);
     
     const titleComponent = await getElementInDOM(titleID);
-    titleComponent.addEventListener('DOMSubtreeModified', removeSpanTAG);
     const subTitleComponent = await getElementInDOM(subTitleID);
-    
+
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
 
+    const oldAnimeEpisode = await getStoredState("animeEpisode");
+    if (oldAnimeEpisode && oldAnimeEpisode != animeEpisode){
+        removeSpanTAG();
+    }
 
     //const startTime = performance.now();
     const {category:nextCategory} = await getAnimeInfo(animeEpisode+1, animeName)
