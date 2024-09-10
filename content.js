@@ -142,7 +142,7 @@ async function main(siteElementsID) {
     
     const titleComponent = await getElementInDOM(titleID);
     const subTitleComponent = await getElementInDOM(subTitleID);
-    
+
     const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
 
     const oldAnimeEpisode = await getStoredState("animeEpisode");
