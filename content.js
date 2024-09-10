@@ -174,7 +174,7 @@ async function main(siteElementsID) {
 
     //intervalId = setInterval(skipEpisode, 2000);
     skipEpisode(animeEpisode, siteElementsID, site);
-    if (nextCategory.idCategory != "FILLER"){
+    if (nextCategory.idCategory != "FILLER" && site == "www.crunchyroll.com"){
         window.location.reload();
         console.log("reload")   
     }   
