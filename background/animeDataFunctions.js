@@ -73,7 +73,11 @@ function determineCategory(anime, episode,validLanguage) {
             return {idCategory:"MIXED",
                     category:CATEGORIES[validLanguage].MIXED}
         default:
-            return;
+            return {
+                idCategory: 'CANON',
+                category: CATEGORIES[validLanguage].CANON
+            };
+            
     }
 }
 

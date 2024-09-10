@@ -73,11 +73,11 @@ function skipEpisode(currentEpisode, siteElementsID, site) {
 }
 
 function getStoredState(keyName) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         chrome.storage.local.get(keyName, function(result) {
             const storedState = result[keyName];
             if (!storedState) {
-                reject(new Error(`Failed to retrieve the state for key: ${keyName}.`));
+                resolve(null)
             }
             resolve(storedState);
         });
@@ -141,21 +141,26 @@ async function main(siteElementsID) {
     const subTitleID = getSubTitleID(siteElementsID, site);
     
     const titleComponent = await getElementInDOM(titleID);
-    titleComponent.addEventListener('DOMSubtreeModified', removeSpanTAG);
     const subTitleComponent = await getElementInDOM(subTitleID);
-    
-    const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
-    setCacheData("animeName", animeName)
-    setCacheData("animeEpisode",animeEpisode)
 
+    const {animeEpisode, animeName} = getNameAndEpisode(titleComponent, subTitleComponent, site);
+
+    const oldAnimeEpisode = await getStoredState("animeEpisode");
+    if (oldAnimeEpisode && oldAnimeEpisode != animeEpisode){
+        removeSpanTAG();
+    }
 
     //const startTime = performance.now();
     const {category:nextCategory} = await getAnimeInfo(animeEpisode+1, animeName)
-    const {category, color} = await getAnimeInfo(animeEpisode, animeName);
+    const {category, color, imgURL} = await getAnimeInfo(animeEpisode, animeName);
     //const {preCategory, preColor } = await getAnimeInfo(animeEpisode-1, animeName)
 
     //const endTime = performance.now();
     //console.log("Time to get anime info:", endTime - startTime);
+    setCacheData("animeName", animeName)
+    setCacheData("animeEpisode",animeEpisode)
+    setCacheData("animeImgURL", imgURL)
+
     if (category && color){
         setTitle(titleComponent, category.category, color);
     }
@@ -172,7 +177,7 @@ async function main(siteElementsID) {
 
     //intervalId = setInterval(skipEpisode, 2000);
     skipEpisode(animeEpisode, siteElementsID, site);
-    if (nextCategory.idCategory != "FILLER"){
+    if (nextCategory.idCategory != "FILLER" && site == "www.crunchyroll.com"){
         window.location.reload();
         console.log("reload")   
     }   

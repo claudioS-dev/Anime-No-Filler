@@ -57,6 +57,7 @@ left: 16px;
 border: 1px;
 
 font-family: Poppins;
+text-transform: capitalize;
 font-size: 32px;  
 font-weight: 600;
 line-height: 48px;
