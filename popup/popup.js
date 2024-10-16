@@ -22,8 +22,8 @@ async function modifyInfoPopup(){
     const headerElement = document.querySelector('.header');
     const titleAnime = document.getElementsByClassName('anime-title')[0];
 
-    const changeBackgroundImage = (animeName, imageName) => {
-        headerElement.style.background = `url("../images/fp/${imageName}")`;
+    const changeBackgroundImage = (animeName, imageURL) => {
+        headerElement.style.background = `url("${imageURL}")`;
         headerElement.style.backgroundSize = 'cover';
         headerElement.style.backgroundRepeat = 'no-repeat';
         headerElement.style.backgroundPosition = 'center';
@@ -39,29 +39,11 @@ async function modifyInfoPopup(){
 
     }
 
-    console.log(animeName)
-    switch (animeName) {
-        case "one piece": 
-            changeBackgroundImage("One Piece", "op.webp");
-            break;
-        case "naruto":
-            changeBackgroundImage("Naruto", "naruto.webp");
-            break;
-        case "black clover":
-            changeBackgroundImage("Black Clover", "BC.jwebp");
-            break;
-        case "bleach":
-            changeBackgroundImage("Bleach", "bleach.webp");
-            break;
-        case "naruto shippuden":
-            changeBackgroundImage("Naruto shippuden", "narutosh.webp");
-            break;
-        case "boruto: naruto next generations":
-            changeBackgroundImage("Boruto: Naruto Next Generations", "boruto.webp");
-            break;
-        default:
-            changeBackgroundImage("Portada", "Portada.webp");
-
+    const imgURL = await getStoredState("animeImgURL");
+    if (imgURL){
+        changeBackgroundImage(animeName, imgURL);
+    }else{
+        changeBackgroundImage("Portada", "../images/fp/Portada.webp");
     }
     
 }
